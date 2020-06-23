@@ -1,0 +1,9 @@
+.idea/*
+
+api/node_modules/*
+api/tests/files/*
+api/dist
+
+api/yarn-error.log
+
+!.gitkeep
