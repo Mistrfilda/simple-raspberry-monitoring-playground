@@ -9,6 +9,8 @@ app.get('/log2', logController.getMultiple);
 
 app.get('/app1/logs', logController.getAppLogs);
 app.get('/app1/logs/:logId', logController.getAppLogContents);
+app.get('/app1/logs/:logId/level/:filtered', logController.getAppLogContentsFilterLogLevel)
+app.get('/app1/logs/:logId/filter/:filtered', logController.getAppLogContentsFilterAboveLogLevel)
 
 // start the Express server
 app.listen(port, function() {
