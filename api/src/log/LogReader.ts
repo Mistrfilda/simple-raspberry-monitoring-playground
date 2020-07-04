@@ -1,32 +1,31 @@
 import path from 'path';
 import fs from 'fs';
 import {logLevel} from './LogLevel'
-import {isString} from "util";
 
 export default class logReader {
 
-    static app1_log_folder: string = path.join(__dirname, '../../tests/files');
+    static app1_log_folder = path.join(__dirname, '../../tests/files');
 
-    static monolog_prefix: string = 'default';
+    static monolog_prefix = 'default';
 
     public getList(folder: string): string[] {
         return fs.readdirSync(folder);
     }
 
     public readFile(folder: string, file: string): string[] {
-        let fileContents = fs.readFileSync(path.join(folder, file), 'utf-8');
+        const fileContents = fs.readFileSync(path.join(folder, file), 'utf-8');
         return fileContents.split("\n");
     }
 
     public readAndParseLogLevel(folder: string, file: string, requestLogLevel: string): string[] {
-        let parsedFile = this.readFile(folder, file);
-        let filteredParts: string[] = [];
+        const parsedFile = this.readFile(folder, file);
+        const filteredParts: string[] = [];
 
         if (!(requestLogLevel in logLevel)) {
             throw new Error('no no no');
         }
 
-        parsedFile.forEach(function (value: string, index: number) {
+        parsedFile.forEach(function (value: string) {
             if (value.includes(logReader.monolog_prefix + '.' + requestLogLevel.toUpperCase())) {
                 filteredParts.push(value);
             }
@@ -36,11 +35,11 @@ export default class logReader {
     }
 
     public readAndParseAboveLogLevel(folder: string, file: string, requestLogLevel: string): string[] {
-        let parsedFile = this.readFile(folder, file);
-        let filteredParts: string[] = [];
+        const parsedFile = this.readFile(folder, file);
+        const filteredParts: string[] = [];
 
         // @ts-ignore
-        let maxIndex: number = Object.keys(logLevel).find(key => logLevel[key] === requestLogLevel)
+        const maxIndex: number = Object.keys(logLevel).find(key => logLevel[key] === requestLogLevel)
         if (maxIndex === undefined) {
             throw new Error('no no no');
         }
