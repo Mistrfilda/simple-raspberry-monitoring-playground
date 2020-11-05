@@ -9,6 +9,10 @@ import MemData = Systeminformation.MemData;
 
 const systemInformationReader = new SystemInformationReader();
 
+import {SystemInformationResultValues} from "./SystemInformationResultValues";
+
+import ResultValues = SystemInformationResultValues.allInformation;
+
 export const getCurrentCpuTemperature = function (req: Request, res: Response) {
     systemInformationReader.getCurrentCpuTemperature()
         .then(function (data: CpuTemperatureData) {
@@ -35,7 +39,7 @@ export const getCpuInfo = function (req: Request, res: Response) {
 }
 
 export const getCurrentCpuLoad = function (req: Request, res: Response) {
-    systemInformationReader.getCurrentCpuLoadinfo()
+    systemInformationReader.getCurrentCpuLoadInfo()
         .then(function (data: CpuCurrentSpeedData) {
             res.json({
                 'min': data.min,
@@ -60,6 +64,16 @@ export const getCurrentRamUsage = function (req: Request, res: Response) {
                 'swapFree': data.swapfree,
                 'swapUsed': data.swapused
             });
+        })
+        .catch(function (error: string) {
+            throw new Error(error);
+        });
+}
+
+export const getAllData = function (req: Request, res: Response) {
+    systemInformationReader.getAllInfo()
+        .then(function (data: ResultValues) {
+            res.json(data)
         })
         .catch(function (error: string) {
             throw new Error(error);

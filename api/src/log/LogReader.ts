@@ -1,32 +1,36 @@
 import path from 'path';
 import fs from 'fs';
 import {logLevel} from './LogLevel'
+import {LogRecord} from "./LogRecord";
 
 export default class logReader {
 
     static app1_log_folder = path.join(__dirname, '../../tests/files');
 
-    static monolog_prefix = 'default';
-
     public getList(folder: string): string[] {
         return fs.readdirSync(folder);
     }
 
-    public readFile(folder: string, file: string): string[] {
+    public readFile(folder: string, file: string): LogRecord[] {
         const fileContents = fs.readFileSync(path.join(folder, file), 'utf-8');
-        return fileContents.split("\n");
+
+        return fileContents.split("\n").filter((line: string) => {
+            return line !== '';
+        }).map((line: string) => {
+            return JSON.parse(line);
+        });
     }
 
-    public readAndParseLogLevel(folder: string, file: string, requestLogLevel: string): string[] {
+    public readAndParseLogLevel(folder: string, file: string, requestLogLevel: string): LogRecord[] {
         const parsedFile = this.readFile(folder, file);
-        const filteredParts: string[] = [];
+        const filteredParts: LogRecord[] = [];
 
         if (!(requestLogLevel in logLevel)) {
             throw new Error('no no no');
         }
 
-        parsedFile.forEach(function (value: string) {
-            if (value.includes(logReader.monolog_prefix + '.' + requestLogLevel.toUpperCase())) {
+        parsedFile.forEach(function (value: LogRecord) {
+            if (value.level_name === requestLogLevel.toUpperCase()) {
                 filteredParts.push(value);
             }
         })
@@ -34,25 +38,30 @@ export default class logReader {
         return filteredParts;
     }
 
-    public readAndParseAboveLogLevel(folder: string, file: string, requestLogLevel: string): string[] {
+    public readAndParseAboveLogLevel(folder: string, file: string, requestLogLevel: string): LogRecord[] {
         const parsedFile = this.readFile(folder, file);
-        const filteredParts: string[] = [];
+        const filteredParts: LogRecord[] = [];
 
-        // @ts-ignore
-        const maxIndex: number = Object.keys(logLevel).find(key => logLevel[key] === requestLogLevel)
-        if (maxIndex === undefined) {
+        if (!(requestLogLevel in logLevel)) {
             throw new Error('no no no');
         }
 
-        Object.values(logLevel).map(function (element: any, index: number) {
-            if (typeof element === 'string' && (index <= maxIndex)) {
-                parsedFile.forEach(function (value: string, index: number) {
-                    if (value.includes(logReader.monolog_prefix + '.' + element.toUpperCase())) {
-                        filteredParts.push(value);
-                    }
-                })
+        let parsedLogLevel: number = logLevel[requestLogLevel as keyof typeof logLevel];
+        const desiredLogLevels: string[] = [];
+
+        console.log(parsedLogLevel);
+        while (parsedLogLevel !== 0) {
+            desiredLogLevels.push(logLevel[parsedLogLevel].toUpperCase())
+            parsedLogLevel = parsedLogLevel - 1;
+        }
+
+        desiredLogLevels.push(logLevel[logLevel.emergency].toUpperCase());
+
+        parsedFile.forEach(function (value: LogRecord) {
+            if (desiredLogLevels.includes(value.level_name)) {
+                filteredParts.push(value);
             }
-        });
+        })
 
         return filteredParts;
     }

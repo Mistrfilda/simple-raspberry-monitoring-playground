@@ -16,6 +16,8 @@ app.get('/app1/system/cpuload', systemInformationController.getCurrentCpuLoad);
 
 app.get('/app1/system/raminfo', systemInformationController.getCurrentRamUsage);
 
+app.get('/app1/system/getAll', systemInformationController.getAllData);
+
 // start the Express server
 app.listen(port, function() {
     console.log(`server started at http://localhost:${ port }` );
