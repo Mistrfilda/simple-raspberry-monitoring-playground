@@ -1,20 +1,32 @@
 import {Request, Response} from "express";
 import LogReader from "./LogReader";
+import {BaseController} from "../controller/BaseController";
 
-const logReader = new LogReader();
+export default class logController extends BaseController {
 
-export const getAppLogs = function (req: Request, res: Response): void {
-    res.json(logReader.getList(LogReader.app1_log_folder));
+    logReader: LogReader;
+
+    appLogFolder: string;
+
+    constructor(appLogFolder: string) {
+        super();
+        this.logReader = new LogReader();
+        this.appLogFolder = appLogFolder;
+    }
+
+    public getAppLogs(req: Request, res: Response): void {
+        res.json(this.logReader.getList(this.appLogFolder));
+    }
+
+    public getAppLogContents(req: Request, res: Response): void {
+        res.json(this.logReader.readFile(this.appLogFolder, req.params.logId));
+    };
+
+    public getAppLogContentsFilterLogLevel(req: Request, res: Response): void {
+        res.json(this.logReader.readAndParseLogLevel(this.appLogFolder, req.params.logId, req.params.filtered));
+    };
+
+    public getAppLogContentsFilterAboveLogLevel(req: Request, res: Response): void {
+        res.json(this.logReader.readAndParseAboveLogLevel(this.appLogFolder, req.params.logId, req.params.filtered));
+    };
 }
-
-export const getAppLogContents = function (req: Request, res: Response): void {
-    res.json(logReader.readFile(LogReader.app1_log_folder, req.params.logId));
-};
-
-export const getAppLogContentsFilterLogLevel = function (req: Request, res: Response): void {
-    res.json(logReader.readAndParseLogLevel(LogReader.app1_log_folder, req.params.logId, req.params.filtered));
-};
-
-export const getAppLogContentsFilterAboveLogLevel = function (req: Request, res: Response): void {
-    res.json(logReader.readAndParseAboveLogLevel(LogReader.app1_log_folder, req.params.logId, req.params.filtered));
-};

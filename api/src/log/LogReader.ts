@@ -5,8 +5,6 @@ import {LogRecord} from "./LogRecord";
 
 export default class logReader {
 
-    static app1_log_folder = path.join(__dirname, '../../tests/files');
-
     public getList(folder: string): string[] {
         return fs.readdirSync(folder);
     }
@@ -49,7 +47,6 @@ export default class logReader {
         let parsedLogLevel: number = logLevel[requestLogLevel as keyof typeof logLevel];
         const desiredLogLevels: string[] = [];
 
-        console.log(parsedLogLevel);
         while (parsedLogLevel !== 0) {
             desiredLogLevels.push(logLevel[parsedLogLevel].toUpperCase())
             parsedLogLevel = parsedLogLevel - 1;
