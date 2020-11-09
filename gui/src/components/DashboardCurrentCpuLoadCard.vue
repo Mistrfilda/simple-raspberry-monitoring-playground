@@ -11,7 +11,7 @@
 
             <div
               class="row no-gutters align-items-center"
-              v-for="(core, index) in cpuLoad.cores"
+              v-for="(core, index) in cpuLoad.cpuCoresLoads"
               v-bind:key="core"
             >
               <div class="col-sm-3">
@@ -20,22 +20,22 @@
                 </div>
               </div>
               <div class="col-sm-9">
-                <span class="badge" :class="`badge-` + getContextualClass()">
-                  {{ calculateLoadPercentage(cpuLoad.max, core) }} %
+                <span class="badge" :class="`badge-` + getContextualClass(core.load)">
+                  {{ Math.ceil(core.load) }} %
                 </span>
                 <div class="progress progress-sm mr-2">
                   <div
                     class="progress-bar"
-                    :class="'bg-' + getContextualClass()"
+                    :class="'bg-' + getContextualClass(core.load)"
                     role="progressbar"
                     :style="
                       'width:' +
-                        calculateLoadPercentage(cpuLoad.max, core) +
+                        core.load +
                         '%'
                     "
-                    :aria-valuenow="calculateLoadPercentage(cpuLoad.max, core)"
+                    :aria-valuenow="core.load"
                     aria-valuemin="0"
-                    :aria-valuemax="calculateLoadPercentage(cpuLoad.max, core)"
+                    aria-valuemax="100"
                   ></div>
                 </div>
               </div>
@@ -57,16 +57,17 @@ import { SystemInformationResultValues } from "@/definitions/SystemInformationRe
 export default defineComponent({
   name: "DashboardCurrentCpuLoadCard",
   props: {
+    cpuSpeed: {
+      type: Object as PropType<SystemInformationResultValues.cpuSpeedInfo>,
+      required: true
+    },
     cpuLoad: {
-      type: Object as PropType<SystemInformationResultValues.cpuLoadInfo>,
+      type: Object as PropType<SystemInformationResultValues.currentCpuLoad>,
       required: true
     },
     loadPercentage: Number
   },
   methods: {
-    calculateLoadPercentage(max: number, current: number): number {
-      return (100 * current) / max;
-    },
     getContextualClass(load: number): string {
       if (load < 25) {
         return "info";

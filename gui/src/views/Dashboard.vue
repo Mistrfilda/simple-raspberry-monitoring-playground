@@ -32,8 +32,30 @@
     >
     </DashboardBasicCard>
 
+    <DashboardBasicCard
+        text="Cpu load"
+        :value="values.currentCpuLoadInfo.currentload + ' %'"
+        icon="microchip"
+    >
+    </DashboardBasicCard>
+
+    <DashboardBasicCard
+        text="Cpu load system"
+        :value="values.currentCpuLoadInfo.currentloadSystem + ' %'"
+        icon="microchip"
+    >
+    </DashboardBasicCard>
+
+    <DashboardBasicCard
+        text="Cpu load user"
+        :value="values.currentCpuLoadInfo.currentloadUser + ' %'"
+        icon="microchip"
+    >
+    </DashboardBasicCard>
+
     <DashboardCurrentCpuLoadCard
-      v-bind:cpuLoad="values.cpuLoadInfo"
+      v-bind:cpuLoad="values.currentCpuLoadInfo"
+      v-bind:cpu-speed="values.cpuSpeedInfo"
     ></DashboardCurrentCpuLoadCard>
   </div>
 

@@ -38,7 +38,9 @@ app.get('/app1/logs/:logId/filter/:filtered', (req: express.Request, res: expres
 
 app.get('/app1/system/cpuinfo', (req: express.Request, res: express.Response) => { systemInformationController.getCpuInfo(req, res) });
 app.get('/app1/system/cputemp', (req: express.Request, res: express.Response) => { systemInformationController.getCurrentCpuTemperature(req, res) });
-app.get('/app1/system/cpuload', (req: express.Request, res: express.Response) => { systemInformationController.getCurrentCpuLoad(req, res) });
+app.get('/app1/system/cpuspeed', (req: express.Request, res: express.Response) => { systemInformationController.getCurrentCpuSpeed(req, res) });
+
+app.get('/app1/system/currentLoad', (req: express.Request, res: express.Response) => { systemInformationController.getCurrentLoad(req, res) });
 
 app.get('/app1/system/raminfo', (req: express.Request, res: express.Response) => { systemInformationController.getCurrentRamUsage(req, res) });
 

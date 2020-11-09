@@ -12,7 +12,7 @@ export default class SystemInformationReader {
         return si.cpu();
     }
 
-    public async getCurrentCpuLoadInfo(): Promise<Systeminformation.CpuCurrentSpeedData> {
+    public async getCurrentCpuSpeed(): Promise<Systeminformation.CpuCurrentSpeedData> {
         return si.cpuCurrentspeed();
     }
 
@@ -20,12 +20,26 @@ export default class SystemInformationReader {
         return si.mem();
     }
 
+    public async getCurrentLoad(): Promise<Systeminformation.CurrentLoadData> {
+        return si.currentLoad();
+    }
+
     public async getAllInfo(): Promise<ResultValues>
     {
         let cpuTemperature = await this.getCurrentCpuTemperature();
         let cpuInfo = await this.getCpuInfo();
-        let currentCpuLoadInfo = await this.getCurrentCpuLoadInfo();
+        let currentCpuSpeedInfo = await this.getCurrentCpuSpeed();
         let ramUsageInfo = await this.getRamUsageInfo();
+        let currentCpuLoad = await this.getCurrentLoad();
+
+        let coresSpeeds: SystemInformationResultValues.cpuCoreLoadInfo[] = [];
+        currentCpuLoad.cpus.forEach(function (data: Systeminformation.CurrentLoadCpuData) {
+            coresSpeeds.push({
+                load: data.load,
+                loadUser: data.load_user,
+                loadSystem: data.load_system,
+            })
+        });
 
         let result: ResultValues = {
             cpuInfo: {
@@ -34,11 +48,11 @@ export default class SystemInformationReader {
                 speed: cpuInfo.speed,
                 cores: cpuInfo.cores,
             },
-            cpuLoadInfo: {
-                min: currentCpuLoadInfo.min,
-                max: currentCpuLoadInfo.max,
-                avg: currentCpuLoadInfo.avg,
-                cores: currentCpuLoadInfo.cores,
+            cpuSpeedInfo: {
+                min: currentCpuSpeedInfo.min,
+                max: currentCpuSpeedInfo.max,
+                avg: currentCpuSpeedInfo.avg,
+                cores: currentCpuSpeedInfo.cores,
             },
             ramUsage: {
                 total: ramUsageInfo.total,
@@ -50,6 +64,13 @@ export default class SystemInformationReader {
             },
             temperatureInfo: {
                 temperature: cpuTemperature.main
+            },
+            currentCpuLoadInfo: {
+                currentload: currentCpuLoad.currentload,
+                currentloadUser: currentCpuLoad.currentload_user,
+                currentloadSystem: currentCpuLoad.currentload_system,
+                cpuCoresLoads: coresSpeeds
+
             }
         };
 

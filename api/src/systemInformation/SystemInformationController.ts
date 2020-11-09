@@ -41,8 +41,8 @@ export default class SystemInformationController extends BaseController {
             });
     }
 
-    public getCurrentCpuLoad(req: Request, res: Response) {
-        systemInformationReader.getCurrentCpuLoadInfo()
+    public getCurrentCpuSpeed(req: Request, res: Response) {
+        systemInformationReader.getCurrentCpuSpeed()
             .then(function (data: CpuCurrentSpeedData) {
                 res.json({
                     'min': data.min,
@@ -67,6 +67,16 @@ export default class SystemInformationController extends BaseController {
                     'swapFree': data.swapfree,
                     'swapUsed': data.swapused
                 });
+            })
+            .catch(function (error: string) {
+                throw new Error(error);
+            });
+    }
+
+    public getCurrentLoad(req: Request, res: Response): void {
+        systemInformationReader.getCurrentLoad()
+            .then(function (data: Systeminformation.CurrentLoadData) {
+                res.json(data);
             })
             .catch(function (error: string) {
                 throw new Error(error);

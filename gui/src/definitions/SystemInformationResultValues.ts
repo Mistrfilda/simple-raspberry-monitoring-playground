@@ -10,11 +10,24 @@ export namespace SystemInformationResultValues {
     temperature: number;
   }
 
-  export interface cpuLoadInfo {
+  export interface cpuSpeedInfo {
     min: number;
     max: number;
     avg: number;
     cores: number[];
+  }
+
+  export interface currentCpuLoad {
+    currentload: number;
+    currentloadUser: number;
+    currentloadSystem: number;
+    cpuCoresLoads: cpuCoreLoadInfo[];
+  }
+
+  export interface cpuCoreLoadInfo {
+    load: number;
+    loadUser: number;
+    loadSystem: number;
   }
 
   export interface ramUsage {
@@ -28,7 +41,8 @@ export namespace SystemInformationResultValues {
 
   export interface allInformation {
     cpuInfo: cpuInfo;
-    cpuLoadInfo: cpuLoadInfo;
+    cpuSpeedInfo: cpuSpeedInfo;
+    currentCpuLoadInfo: currentCpuLoad
     ramUsage: ramUsage;
     temperatureInfo: temperatureInfo;
   }
