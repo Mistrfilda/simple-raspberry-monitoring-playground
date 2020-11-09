@@ -1,35 +1,96 @@
 <template>
-  <div>
-    <div>
-      <b-nav pills>
-        <b-nav-item active>Active</b-nav-item>
-        <b-nav-item>Link</b-nav-item>
-        <b-nav-item-dropdown
-            id="my-nav-dropdown"
-            text="Dropdown"
-            toggle-class="nav-link-custom"
-            right
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul
+      class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      id="accordionSidebar"
+    >
+      <!-- Sidebar - Brand -->
+      <a
+        class="sidebar-brand d-flex align-items-center justify-content-center"
+        href="index.html"
+      >
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Dashboard -->
+      <li
+        class="nav-item"
+        v-for="menuItem in menuItems"
+        v-bind:key="menuItem.id"
+      >
+        <router-link class="nav-link" :to="menuItem.link">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>{{ menuItem.label }}</span>
+        </router-link>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <nav
+          class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
         >
-          <b-dropdown-item>One</b-dropdown-item>
-          <b-dropdown-item>Two</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item>Three</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-nav>
+          <!-- Sidebar Toggle (Topbar) -->
+          <button
+            id="sidebarToggleTop"
+            class="btn btn-link d-md-none rounded-circle mr-3"
+          >
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Messages -->
+            <div class="topbar-divider d-none d-sm-block"></div>
+          </ul>
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <router-view />
+        </div>
+      </div>
     </div>
   </div>
-<!--  <div id="nav">-->
-<!--    <button v-on:click="increment"> {{ count }}</button>-->
-<!--    <ul>-->
-<!--      <li v-for="test in testik" v-bind:key="test.text">-->
-<!--        {{ test.text }}-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--    <router-link to="/">Home</router-link> |-->
-<!--    <router-link to="/about">About</router-link> |-->
-<!--    <router-link to="/dashboard">Dashboard</router-link>-->
-<!--  </div>-->
-<!--  <router-view />-->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!--  <div id="nav">-->
+  <!--    <button v-on:click="increment"> {{ count }}</button>-->
+  <!--    <ul>-->
+  <!--      <li v-for="test in testik" v-bind:key="test.text">-->
+  <!--        {{ test.text }}-->
+  <!--      </li>-->
+  <!--    </ul>-->
+  <!--    <router-link to="/">Home</router-link> |-->
+  <!--    <router-link to="/about">About</router-link> |-->
+  <!--    <router-link to="/dashboard">Dashboard</router-link>-->
+  <!--  </div>-->
+  <!--  <router-view />-->
 </template>
 
 <script lang="ts">
@@ -39,43 +100,13 @@ export default defineComponent({
   name: "App",
   data() {
     return {
-      count: 0,
-      testik: [
-        { text: '321321 534'},
-        { text: '321321 534 543'},
-        { text: '321321 534 6435'}
+      menuItems: [
+        { id: 1, label: "Home", link: "/" },
+        { id: 2, label: "Dashboard", link: "/dashboard" }
       ]
-    }
+    };
   },
-  methods: {
-    increment () {
-      this.count++
-    }
-  },
-  components: {
-  }
+  methods: {},
+  components: {}
 });
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
