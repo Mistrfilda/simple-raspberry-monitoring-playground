@@ -1,4 +1,11 @@
-@import "./scss/_variables.scss";
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+@import "./sbadmin/scss/_variables.scss";
 
 @import "~bootstrap/scss/bootstrap";
-@import '~bootstrap-vue/src/index.scss';
+
+@import "./sbadmin/scss/sb-admin-2";
