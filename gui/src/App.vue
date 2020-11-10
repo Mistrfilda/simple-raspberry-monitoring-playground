@@ -73,24 +73,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!--  <div id="nav">-->
-  <!--    <button v-on:click="increment"> {{ count }}</button>-->
-  <!--    <ul>-->
-  <!--      <li v-for="test in testik" v-bind:key="test.text">-->
-  <!--        {{ test.text }}-->
-  <!--      </li>-->
-  <!--    </ul>-->
-  <!--    <router-link to="/">Home</router-link> |-->
-  <!--    <router-link to="/about">About</router-link> |-->
-  <!--    <router-link to="/dashboard">Dashboard</router-link>-->
-  <!--  </div>-->
-  <!--  <router-view />-->
 </template>
 
 <script lang="ts">

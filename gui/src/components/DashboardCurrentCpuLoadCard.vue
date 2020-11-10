@@ -1,11 +1,11 @@
 <template>
   <!-- Earnings (Monthly) Card Example -->
   <div class="col-sm-12">
-    <div class="card border-left-info shadow h-100 py-2">
+    <div class="card shadow h-100 py-2" :class="getBorderClass()">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+            <div class="text-xs font-weight-bold text-uppercase mb-1" :class="getTextClass()">
               Current CPU load
             </div>
 
@@ -41,9 +41,6 @@
               </div>
             </div>
           </div>
-          <div class="col-auto">
-            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-          </div>
         </div>
       </div>
     </div>
@@ -65,6 +62,10 @@ export default defineComponent({
       type: Object as PropType<SystemInformationResultValues.currentCpuLoad>,
       required: true
     },
+    border: {
+      type: String,
+      default: "border-left"
+    },
     loadPercentage: Number
   },
   methods: {
@@ -82,7 +83,13 @@ export default defineComponent({
       }
 
       return "danger";
-    }
+    },
+    getBorderClass(): string {
+      return this.border + "-" + this.getContextualClass(this.cpuLoad.currentload);
+    },
+    getTextClass(): string {
+      return "text-" + this.getContextualClass(this.cpuLoad.currentload);
+    },
   }
 });
 </script>

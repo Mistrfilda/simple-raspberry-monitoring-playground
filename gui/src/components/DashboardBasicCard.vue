@@ -6,7 +6,7 @@
           <div class="col mr-2">
             <div
               class="text-xs font-weight-bold text-uppercase mb-1"
-              :class="getTextClass"
+              :class="getTextClass()"
             >
               {{ text }}
             </div>
