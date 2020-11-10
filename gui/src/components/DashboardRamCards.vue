@@ -6,19 +6,11 @@
         contextual-class="primary"
         icon="microchip"
     ></DashboardBasicCard>
-  </div>
 
-  <div class="row">
-    <DashboardBasicCard
-        text="Swap free"
-        :value="calculateBytesToMb(ramUsage.swapFree) + ' MB'"
-        contextual-class="primary"
-        icon="microchip"
-    ></DashboardBasicCard>
 
     <DashboardBasicCard
-        text="Swap used"
-        :value="calculateBytesToMb(ramUsage.swapUsed) + ' MB'"
+        text="Available swap"
+        :value="calculateBytesToMb(ramUsage.swapTotal) + ' MB'"
         contextual-class="primary"
         icon="microchip"
     ></DashboardBasicCard>

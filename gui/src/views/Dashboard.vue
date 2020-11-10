@@ -61,10 +61,11 @@
             <h2 class="mb-0">
               <button class="btn btn-link btn-block text-left text-white" type="button" data-toggle="collapse"
                       data-target="#cpuLoadCollapse" aria-expanded="true" aria-controls="collapseOne">
-                CPU load <span class="badge badge-pill"
-                               :class="'badge-' + getContextualBadgeLoadClass(values.currentCpuLoadInfo.currentload)"> {{
-                  ceilCpuLoadValue(values.currentCpuLoadInfo.currentload)
-                }} %</span>
+                CPU load
+                <span class="badge badge-pill"
+                      :class="'badge-' + getContextualBadgeLoadClass(values.currentCpuLoadInfo.currentload)"> {{
+                    ceilCpuLoadValue(values.currentCpuLoadInfo.currentload)
+                  }} %</span>
               </button>
             </h2>
           </div>
@@ -121,6 +122,9 @@
               <button class="btn btn-link btn-block text-left text-white" type="button" data-toggle="collapse"
                       data-target="#ramUsageCollapse" aria-expanded="true" aria-controls="collapseOne">
                 RAM usage
+                <span class="badge badge-pill"
+                      :class="'badge-' + getRamContextualClass(values.ramUsage.total, values.ramUsage.used)">
+                  {{ Math.ceil(getRamPercentage(values.ramUsage.total, values.ramUsage.used)) }} %</span>
               </button>
             </h2>
           </div>
@@ -213,7 +217,22 @@ export default defineComponent({
       }
 
       return "danger";
-    }
+    },
+    getRamPercentage(total: number, ramUsed: number): number {
+      return (100 * ramUsed) / total;
+    },
+    getRamContextualClass(total: number, ramUsed: number): string {
+      const percentage = this.getRamPercentage(total, ramUsed);
+      if (percentage < 30) {
+        return 'secondary'
+      }
+
+      if (percentage < 60) {
+        return 'warning';
+      }
+
+      return 'danger';
+    },
   },
   components: {
     DashboardBasicCard,
