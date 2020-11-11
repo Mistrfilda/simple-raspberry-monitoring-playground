@@ -42,7 +42,7 @@ export namespace SystemInformationResultValues {
   export interface allInformation {
     cpuInfo: cpuInfo;
     cpuSpeedInfo: cpuSpeedInfo;
-    currentCpuLoadInfo: currentCpuLoad
+    currentCpuLoadInfo: currentCpuLoad;
     ramUsage: ramUsage;
     temperatureInfo: temperatureInfo;
   }

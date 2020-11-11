@@ -5,7 +5,10 @@
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-uppercase mb-1" :class="getTextClass()">
+            <div
+              class="text-xs font-weight-bold text-uppercase mb-1"
+              :class="getTextClass()"
+            >
               Current CPU load
             </div>
 
@@ -20,7 +23,10 @@
                 </div>
               </div>
               <div class="col-sm-9">
-                <span class="badge" :class="`badge-` + getContextualClass(core.load)">
+                <span
+                  class="badge"
+                  :class="`badge-` + getContextualClass(core.load)"
+                >
                   {{ Math.ceil(core.load) }} %
                 </span>
                 <div class="progress progress-sm mr-2">
@@ -28,11 +34,7 @@
                     class="progress-bar"
                     :class="'bg-' + getContextualClass(core.load)"
                     role="progressbar"
-                    :style="
-                      'width:' +
-                        core.load +
-                        '%'
-                    "
+                    :style="'width:' + core.load + '%'"
                     :aria-valuenow="core.load"
                     aria-valuemin="0"
                     aria-valuemax="100"
@@ -85,11 +87,13 @@ export default defineComponent({
       return "danger";
     },
     getBorderClass(): string {
-      return this.border + "-" + this.getContextualClass(this.cpuLoad.currentload);
+      return (
+        this.border + "-" + this.getContextualClass(this.cpuLoad.currentload)
+      );
     },
     getTextClass(): string {
       return "text-" + this.getContextualClass(this.cpuLoad.currentload);
-    },
+    }
   }
 });
 </script>

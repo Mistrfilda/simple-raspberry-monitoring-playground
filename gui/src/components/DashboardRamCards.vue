@@ -1,31 +1,30 @@
 <template>
   <div class="row">
     <DashboardBasicCard
-        text="Total ram installed"
-        :value="calculateBytesToMb(ramUsage.total) + ' MB'"
-        contextual-class="primary"
-        icon="microchip"
+      text="Total ram installed"
+      :value="calculateBytesToMb(ramUsage.total) + ' MB'"
+      contextual-class="primary"
+      icon="microchip"
     ></DashboardBasicCard>
 
-
     <DashboardBasicCard
-        text="Available swap"
-        :value="calculateBytesToMb(ramUsage.swapTotal) + ' MB'"
-        contextual-class="primary"
-        icon="microchip"
+      text="Available swap"
+      :value="calculateBytesToMb(ramUsage.swapTotal) + ' MB'"
+      contextual-class="primary"
+      icon="microchip"
     ></DashboardBasicCard>
   </div>
 
   <div class="row">
     <DashboardCurrentRamUsageCard
-        :ram-usage="ramUsage"
+      :ram-usage="ramUsage"
     ></DashboardCurrentRamUsageCard>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
-import {SystemInformationResultValues} from "@/definitions/SystemInformationResultValues";
+import { defineComponent, PropType } from "vue";
+import { SystemInformationResultValues } from "@/definitions/SystemInformationResultValues";
 import DashboardCurrentRamUsageCard from "@/components/DashboardCurrentRamUsageCard.vue";
 import DashboardBasicCard from "@/components/DashboardBasicCard.vue";
 
@@ -39,7 +38,7 @@ export default defineComponent({
     border: {
       type: String,
       default: "border-left"
-    },
+    }
   },
   methods: {
     getContextualClass(load: number): string {

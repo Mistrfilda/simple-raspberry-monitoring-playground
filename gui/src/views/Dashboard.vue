@@ -6,13 +6,18 @@
   <div class="row" v-if="dataLoaded === true">
     <div class="col-sm-12">
       <div class="accordion" id="dashboardAccordion">
-
         <!-- CPU-->
         <div class="card border-primary">
           <div class="card-header bg-gradient-primary" id="cpuHeading">
             <h2 class="mb-0">
-              <button class="btn btn-block text-left text-white btn-link" type="button" data-toggle="collapse"
-                      data-target="#cpuCollapse" aria-expanded="true" aria-controls="collapseOne">
+              <button
+                class="btn btn-block text-left text-white btn-link"
+                type="button"
+                data-toggle="collapse"
+                data-target="#cpuCollapse"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
                 CPU information
               </button>
             </h2>
@@ -22,33 +27,32 @@
             <div class="card-body">
               <div class="row">
                 <DashboardBasicCard
-                    :text="'CPU manufacturer'"
-                    :value="values.cpuInfo.manufacturer"
-                    icon="industry"
+                  :text="'CPU manufacturer'"
+                  :value="values.cpuInfo.manufacturer"
+                  icon="industry"
                 >
                 </DashboardBasicCard>
 
                 <DashboardBasicCard
-                    :text="'CPU type'"
-                    :value="values.cpuInfo.brand"
-                    icon="microchip"
+                  :text="'CPU type'"
+                  :value="values.cpuInfo.brand"
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
 
                 <DashboardBasicCard
-                    :text="'Speed'"
-                    :value="values.cpuInfo.speed"
-                    icon="microchip"
+                  :text="'Speed'"
+                  :value="values.cpuInfo.speed"
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
 
                 <DashboardBasicCard
-                    text="Cores"
-                    :value="values.cpuInfo.cores"
-                    icon="microchip"
+                  text="Cores"
+                  :value="values.cpuInfo.cores"
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
-
               </div>
             </div>
           </div>
@@ -59,55 +63,100 @@
         <div class="card border-primary">
           <div class="card-header bg-gradient-primary" id="cpuLoadHeading">
             <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left text-white" type="button" data-toggle="collapse"
-                      data-target="#cpuLoadCollapse" aria-expanded="true" aria-controls="collapseOne">
+              <button
+                class="btn btn-link btn-block text-left text-white"
+                type="button"
+                data-toggle="collapse"
+                data-target="#cpuLoadCollapse"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
                 CPU load
-                <span class="badge badge-pill"
-                      :class="'badge-' + getContextualBadgeLoadClass(values.currentCpuLoadInfo.currentload)"> {{
-                    ceilCpuLoadValue(values.currentCpuLoadInfo.currentload)
-                  }} %</span>
+                <span
+                  class="badge badge-pill"
+                  :class="
+                    'badge-' +
+                      getContextualBadgeLoadClass(
+                        values.currentCpuLoadInfo.currentload
+                      )
+                  "
+                >
+                  {{ ceilCpuLoadValue(values.currentCpuLoadInfo.currentload) }}
+                  %</span
+                >
               </button>
             </h2>
           </div>
 
-          <div id="cpuLoadCollapse" class="collapse" aria-labelledby="cpuLoadHeading">
+          <div
+            id="cpuLoadCollapse"
+            class="collapse"
+            aria-labelledby="cpuLoadHeading"
+          >
             <div class="card-body">
               <div class="row">
                 <DashboardBasicCard
-                    text="Cpu load"
-                    :value="ceilCpuLoadValue(values.currentCpuLoadInfo.currentload) + ' %'"
-                    :contextual-class="getContextualCpuLoadClass(values.currentCpuLoadInfo.currentload)"
-                    icon="microchip"
+                  text="Cpu load"
+                  :value="
+                    ceilCpuLoadValue(values.currentCpuLoadInfo.currentload) +
+                      ' %'
+                  "
+                  :contextual-class="
+                    getContextualCpuLoadClass(
+                      values.currentCpuLoadInfo.currentload
+                    )
+                  "
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
 
                 <DashboardBasicCard
-                    text="CPU temperature"
-                    :value="values.temperatureInfo.temperature + ' °C'"
-                    :contextual-class="getTemperatureContextualClass(values.temperatureInfo.temperature)"
-                    icon="microchip"
+                  text="CPU temperature"
+                  :value="values.temperatureInfo.temperature + ' °C'"
+                  :contextual-class="
+                    getTemperatureContextualClass(
+                      values.temperatureInfo.temperature
+                    )
+                  "
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
 
                 <DashboardBasicCard
-                    text="Cpu load system"
-                    :value="ceilCpuLoadValue(values.currentCpuLoadInfo.currentloadSystem) + ' %'"
-                    :contextual-class="getContextualCpuLoadClass(values.currentCpuLoadInfo.currentload)"
-                    icon="microchip"
+                  text="Cpu load system"
+                  :value="
+                    ceilCpuLoadValue(
+                      values.currentCpuLoadInfo.currentloadSystem
+                    ) + ' %'
+                  "
+                  :contextual-class="
+                    getContextualCpuLoadClass(
+                      values.currentCpuLoadInfo.currentload
+                    )
+                  "
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
 
                 <DashboardBasicCard
-                    text="Cpu load user"
-                    :value="ceilCpuLoadValue(values.currentCpuLoadInfo.currentloadUser) + ' %'"
-                    :contextual-class="getContextualCpuLoadClass(values.currentCpuLoadInfo.currentload)"
-                    icon="microchip"
+                  text="Cpu load user"
+                  :value="
+                    ceilCpuLoadValue(
+                      values.currentCpuLoadInfo.currentloadUser
+                    ) + ' %'
+                  "
+                  :contextual-class="
+                    getContextualCpuLoadClass(
+                      values.currentCpuLoadInfo.currentload
+                    )
+                  "
+                  icon="microchip"
                 >
                 </DashboardBasicCard>
 
                 <DashboardCurrentCpuLoadCard
-                    v-bind:cpuLoad="values.currentCpuLoadInfo"
-                    v-bind:cpu-speed="values.cpuSpeedInfo"
+                  v-bind:cpuLoad="values.currentCpuLoadInfo"
+                  v-bind:cpu-speed="values.cpuSpeedInfo"
                 ></DashboardCurrentCpuLoadCard>
               </div>
             </div>
@@ -119,41 +168,66 @@
         <div class="card border-primary">
           <div class="card-header bg-gradient-primary" id="ramUsageHeading">
             <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left text-white" type="button" data-toggle="collapse"
-                      data-target="#ramUsageCollapse" aria-expanded="true" aria-controls="collapseOne">
+              <button
+                class="btn btn-link btn-block text-left text-white"
+                type="button"
+                data-toggle="collapse"
+                data-target="#ramUsageCollapse"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
                 RAM usage
-                <span class="badge badge-pill"
-                      :class="'badge-' + getRamContextualClass(values.ramUsage.total, values.ramUsage.used)">
-                  {{ Math.ceil(getRamPercentage(values.ramUsage.total, values.ramUsage.used)) }} %</span>
+                <span
+                  class="badge badge-pill"
+                  :class="
+                    'badge-' +
+                      getRamContextualClass(
+                        values.ramUsage.total,
+                        values.ramUsage.used
+                      )
+                  "
+                >
+                  {{
+                    Math.ceil(
+                      getRamPercentage(
+                        values.ramUsage.total,
+                        values.ramUsage.used
+                      )
+                    )
+                  }}
+                  %</span
+                >
               </button>
             </h2>
           </div>
 
-          <div id="ramUsageCollapse" class="collapse" aria-labelledby="ramUsageHeading">
+          <div
+            id="ramUsageCollapse"
+            class="collapse"
+            aria-labelledby="ramUsageHeading"
+          >
             <div class="card-body">
               <DashboardRamCards
-                  :ram-usage="values.ramUsage"
+                :ram-usage="values.ramUsage"
               ></DashboardRamCards>
             </div>
           </div>
         </div>
         <!-- END OF RAM USAGE -->
-
       </div>
     </div>
   </div>
 
-  <div class="row" v-if="dataLoaded === true">
-  </div>
+  <div class="row" v-if="dataLoaded === true"></div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
+import { defineComponent, PropType } from "vue";
 import DashboardBasicCard from "@/components/DashboardBasicCard.vue";
 import DashboardCurrentCpuLoadCard from "@/components/DashboardCurrentCpuLoadCard.vue";
 import DashboardRamCards from "@/components/DashboardRamCards.vue";
 import Axios from "axios";
-import {SystemInformationResultValues} from "@/definitions/SystemInformationResultValues";
+import { SystemInformationResultValues } from "@/definitions/SystemInformationResultValues";
 
 export default defineComponent({
   name: "Dashboard",
@@ -173,7 +247,7 @@ export default defineComponent({
   methods: {
     async fetchDashboardValues(): Promise<void> {
       const result = await Axios.get(
-          "http://localhost:30300/app1/system/getAll"
+        "http://localhost:30300/app1/system/getAll"
       );
       this.values = result.data;
       this.dataLoaded = true;
@@ -224,15 +298,15 @@ export default defineComponent({
     getRamContextualClass(total: number, ramUsed: number): string {
       const percentage = this.getRamPercentage(total, ramUsed);
       if (percentage < 30) {
-        return 'secondary'
+        return "secondary";
       }
 
       if (percentage < 60) {
-        return 'warning';
+        return "warning";
       }
 
-      return 'danger';
-    },
+      return "danger";
+    }
   },
   components: {
     DashboardBasicCard,
