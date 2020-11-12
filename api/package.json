@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "lodash": "^4.17.20",
+    "md5": "^2.3.0",
     "systeminformation": "^4.26.9",
     "typescript": "^3.9.5"
   },

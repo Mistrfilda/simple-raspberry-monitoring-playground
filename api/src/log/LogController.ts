@@ -15,18 +15,18 @@ export default class logController extends BaseController {
     }
 
     public getAppLogs(req: Request, res: Response): void {
-        res.json(this.logReader.getList(this.appLogFolder));
+        res.json(this.logReader.getFullList(this.appLogFolder));
     }
 
     public getAppLogContents(req: Request, res: Response): void {
-        res.json(this.logReader.readFile(this.appLogFolder, req.params.logId));
+        res.json(this.logReader.readFile(this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash)));
     };
 
     public getAppLogContentsFilterLogLevel(req: Request, res: Response): void {
-        res.json(this.logReader.readAndParseLogLevel(this.appLogFolder, req.params.logId, req.params.filtered));
+        res.json(this.logReader.readAndParseLogLevel(this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash), req.params.filtered));
     };
 
     public getAppLogContentsFilterAboveLogLevel(req: Request, res: Response): void {
-        res.json(this.logReader.readAndParseAboveLogLevel(this.appLogFolder, req.params.logId, req.params.filtered));
+        res.json(this.logReader.readAndParseAboveLogLevel(this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash), req.params.filtered));
     };
 }

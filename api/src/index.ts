@@ -32,9 +32,9 @@ const logController = new LogController(config.appLogFolder);
 const systemInformationController = new SystemInformationController();
 
 app.get('/app1/logs', (req: express.Request, res: express.Response) => { logController.getAppLogs(req, res) });
-app.get('/app1/logs/:logId', (req: express.Request, res: express.Response) => { logController.getAppLogContents(req, res) });
-app.get('/app1/logs/:logId/level/:filtered', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterLogLevel(req, res) })
-app.get('/app1/logs/:logId/filter/:filtered', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterAboveLogLevel(req, res) })
+app.get('/app1/logs/:logHash', (req: express.Request, res: express.Response) => { logController.getAppLogContents(req, res) });
+app.get('/app1/logs/:logHash/level/:filtered', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterLogLevel(req, res) })
+app.get('/app1/logs/:logHash/filter/:filtered', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterAboveLogLevel(req, res) })
 
 app.get('/app1/system/cpuinfo', (req: express.Request, res: express.Response) => { systemInformationController.getCpuInfo(req, res) });
 app.get('/app1/system/cputemp', (req: express.Request, res: express.Response) => { systemInformationController.getCurrentCpuTemperature(req, res) });

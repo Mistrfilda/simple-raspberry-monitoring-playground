@@ -2,11 +2,43 @@ import path from 'path';
 import fs from 'fs';
 import {logLevel} from './LogLevel'
 import {LogRecord} from "./LogRecord";
+import {LogRecordFile} from "./LogRecordFile";
+import has = Reflect.has;
+const md5 = require('md5');
+import _ from 'lodash';
 
 export default class logReader {
 
     public getList(folder: string): string[] {
         return fs.readdirSync(folder);
+    }
+
+    public getFilenameFromHash(folder: string, hash: string): string {
+        const files = this.getList(folder);
+
+        for (let i = 0; i < files.length; i++) {
+            if (md5(files[i]) === hash) {
+                return files[i];
+            }
+        }
+
+        throw new Error('File not found');
+    }
+
+    public getFullList(folder: string): LogRecordFile[] {
+        let results: LogRecordFile[] = [];
+        const files = this.getList(folder);
+        files.forEach(function (value: string) {
+            const fileStats = fs.statSync(path.join(folder, value));
+            results.push({
+                id: md5(value),
+                name: value,
+                fileSize: fileStats.size,
+                lastUpdatedAtTimestamp: fileStats.atimeMs,
+            });
+        })
+
+        return results;
     }
 
     public readFile(folder: string, file: string): LogRecord[] {
