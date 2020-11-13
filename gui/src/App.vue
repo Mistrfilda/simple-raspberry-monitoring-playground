@@ -84,7 +84,8 @@ export default defineComponent({
     return {
       menuItems: [
         { id: 1, label: "Home", link: "/" },
-        { id: 2, label: "Dashboard", link: "/dashboard" }
+        { id: 2, label: "Dashboard", link: "/dashboard" },
+        { id: 3, label: "Logs", link: "/logs-list" }
       ]
     };
   },

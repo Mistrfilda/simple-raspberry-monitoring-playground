@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import Dashboard from "@/views/Dashboard.vue";
+import LogsList from "@/views/LogsList.vue";
+import LogTable from "@/views/LogTable.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,7 +14,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard
-  }
+  },
+  {
+    path: "/logs-list",
+    name: "LogsList",
+    component: LogsList
+  },
+  {
+    path: "/logs/:logId",
+    name: "LogTable",
+    component: LogTable
+  },
 ];
 
 const router = createRouter({
