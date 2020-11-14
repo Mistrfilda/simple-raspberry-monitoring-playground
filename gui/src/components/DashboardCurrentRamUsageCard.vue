@@ -207,7 +207,7 @@ export default defineComponent({
     },
     getContextualClass(percentage: number): string {
       if (percentage < 30) {
-        return "secondary";
+        return "success";
       }
 
       if (percentage < 60) {

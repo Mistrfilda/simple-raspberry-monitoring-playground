@@ -16,7 +16,7 @@
           <td> {{ $filters.convertMillisecondsTimestampToDateString(logRecordFile.lastUpdatedAtTimestamp) }} </td>
           <td> {{ $filters.calculateBytesToMbString(logRecordFile.fileSize) }} </td>
           <td class="text-right">
-            <router-link class="btn btn-primary" :to="{name: 'LogTable', params: {logId: logRecordFile.id}}">Detail</router-link>
+            <router-link class="btn btn-primary" :to="{name: 'LogRecord', params: {logId: logRecordFile.id}}">Detail</router-link>
           </td>
         </tr>
         </tbody>

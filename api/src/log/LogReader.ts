@@ -3,9 +3,7 @@ import fs from 'fs';
 import {logLevel} from './LogLevel'
 import {LogRecord} from "./LogRecord";
 import {LogRecordFile} from "./LogRecordFile";
-import has = Reflect.has;
 const md5 = require('md5');
-import _ from 'lodash';
 
 export default class logReader {
 

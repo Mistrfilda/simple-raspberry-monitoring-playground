@@ -6,6 +6,41 @@
   <div class="row" v-if="dataLoaded === true">
     <div class="col-sm-12">
       <div class="accordion" id="dashboardAccordion">
+
+        <!-- LOAD INFO -->
+        <div class="card border-primary">
+          <div class="card-header bg-gradient-primary" id="loadHeading">
+            <h2 class="mb-0">
+              <button
+                  class="btn btn-block text-left text-white btn-link"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#loadCollapse"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+              >
+                Load info
+              </button>
+            </h2>
+          </div>
+
+          <div id="loadCollapse" class="collapse" aria-labelledby="loadHeading">
+            <div class="card-body">
+              <div class="row">
+                <DashboardCurrentCpuLoadCard
+                    v-bind:cpuLoad="values.currentCpuLoadInfo"
+                    v-bind:cpu-speed="values.cpuSpeedInfo"
+                ></DashboardCurrentCpuLoadCard>
+
+                <DashboardCurrentRamUsageCard
+                    :ram-usage="values.ramUsage"
+                ></DashboardCurrentRamUsageCard>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END OF LOAD INFO -->
+
         <!-- CPU-->
         <div class="card border-primary">
           <div class="card-header bg-gradient-primary" id="cpuHeading">
@@ -228,6 +263,7 @@ import DashboardCurrentCpuLoadCard from "@/components/DashboardCurrentCpuLoadCar
 import DashboardRamCards from "@/components/DashboardRamCards.vue";
 import Axios from "axios";
 import { SystemInformationResultValues } from "@/definitions/SystemInformationResultValues";
+import DashboardCurrentRamUsageCard from "@/components/DashboardCurrentRamUsageCard.vue";
 
 export default defineComponent({
   name: "Dashboard",
@@ -311,7 +347,8 @@ export default defineComponent({
   components: {
     DashboardBasicCard,
     DashboardCurrentCpuLoadCard,
-    DashboardRamCards
+    DashboardRamCards,
+    DashboardCurrentRamUsageCard
   }
 });
 </script>

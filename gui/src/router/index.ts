@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import LogsList from "@/views/LogsList.vue";
-import LogTable from "@/views/LogTable.vue";
+import LogRecord from "@/views/LogRecord.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,8 +22,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/logs/:logId",
-    name: "LogTable",
-    component: LogTable
+    name: "LogRecord",
+    component: LogRecord
   },
 ];
 
