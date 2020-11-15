@@ -4,15 +4,18 @@
   </div>
 
   <div class="row">
-    <LogsListTable :log-records-files="logRecordsFiles" v-if="dataLoaded === true"></LogsListTable>
+    <LogsListTable
+      :log-records-files="logRecordsFiles"
+      v-if="dataLoaded === true"
+    ></LogsListTable>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
+import { defineComponent, PropType } from "vue";
 import LogsListTable from "@/components/LogsListTable.vue";
 import Axios from "axios";
-import {LogRecordFile} from "@/definitions/LogRecordFile";
+import { LogRecordFile } from "@/definitions/LogRecordFile";
 
 export default defineComponent({
   name: "LogsList",
@@ -22,19 +25,17 @@ export default defineComponent({
         type: Array as PropType<LogRecordFile[]>
       },
       dataLoaded: false
-    }
+    };
   },
   mounted() {
     this.fetchLogslist();
   },
   methods: {
     async fetchLogslist(): Promise<void> {
-      const result = await Axios.get(
-          "http://localhost:30300/app1/logs"
-      );
+      const result = await Axios.get("http://localhost:30300/app1/logs");
       this.logRecordsFiles = result.data;
       this.dataLoaded = true;
-    },
+    }
   },
   components: {
     LogsListTable
