@@ -1,40 +1,15 @@
 <template>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-          </div>
-          <p class="mb-1">
-            Donec id elit non mi porta gravida at eget metus. Maecenas sed diam
-            eget risus varius blandit.
-          </p>
-          <small>Donec id elit non mi porta.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">
-            Donec id elit non mi porta gravida at eget metus. Maecenas sed diam
-            eget risus varius blandit.
-          </p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">
-            Donec id elit non mi porta gravida at eget metus. Maecenas sed diam
-            eget risus varius blandit.
-          </p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
+  <div class="pt-2 pb-6 md:py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div class="md:flex md:items-center md:justify-between">
+        <div class="flex-1 min-w-0">
+          <h2
+              class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate"
+          >
+            Home
+          </h2>
+        </div>
+        <div class="mt-4 flex md:mt-0 md:ml-4"></div>
       </div>
     </div>
   </div>
