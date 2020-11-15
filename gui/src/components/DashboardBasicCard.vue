@@ -1,25 +1,42 @@
 <template>
-  <div :class="size" class="py-3">
-    <div class="card shadow h-100 py-2" :class="getBorderClass()">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-uppercase mb-1"
-              :class="getTextClass()"
-            >
+  <div class="bg-white overflow-hidden shadow rounded-lg">
+    <div class="px-4 py-5 sm:p-6">
+      <div class="flex items-center">
+        <div class="flex-shrink-0 rounded-md p-3" :class="contextualClass">
+          <i class="text-white fas fa-2x text-white" :class="getIconClas()"></i>
+        </div>
+        <div class="ml-5 w-0 flex-1">
+          <dl>
+            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
               {{ text }}
-            </div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">
-              {{ value }}
-            </div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-2x text-gray-300" :class="getIconClas()"></i>
-          </div>
+            </dt>
+            <dd class="flex items-baseline">
+              <div class="text-2xl leading-8 font-semibold text-gray-900">
+                {{ value }}
+              </div>
+              <div
+                class="ml-2 flex items-baseline text-sm leading-5 font-semibold text-green-600"
+              >
+                <!--                <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" fill="currentColor"-->
+                <!--                     viewBox="0 0 20 20">-->
+                <!--                  <path fill-rule="evenodd"-->
+                <!--                        d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"-->
+                <!--                        clip-rule="evenodd"/>-->
+                <!--                </svg>-->
+                <!--                <span class="sr-only">-->
+                <!--                    Increased by-->
+                <!--                  </span>-->
+                <!--                122-->
+              </div>
+            </dd>
+          </dl>
         </div>
       </div>
     </div>
+    <!--    <div class="bg-blue-500 px-4 py-4 sm:px-6">-->
+    <!--      <div class="text-sm leading-5">-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -39,7 +56,7 @@ export default defineComponent({
     },
     contextualClass: {
       type: String,
-      default: "primary"
+      default: "bg-blue-500"
     },
     icon: String,
     value: String,

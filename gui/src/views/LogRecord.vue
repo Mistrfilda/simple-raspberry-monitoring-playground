@@ -17,7 +17,7 @@ export default defineComponent({
   data() {
     return {
       logId: this.$route.params.logId
-    }
+    };
   },
   components: {
     LogRecordTable

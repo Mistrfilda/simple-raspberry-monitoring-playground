@@ -1,25 +1,23 @@
 <template>
-  <div class="row">
+  <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-1 lg:grid-cols-2">
     <DashboardBasicCard
       text="Total ram installed"
       :value="calculateBytesToMb(ramUsage.total) + ' MB'"
-      contextual-class="primary"
+      contextual-class="bg-blue-500"
       icon="microchip"
     ></DashboardBasicCard>
 
     <DashboardBasicCard
       text="Available swap"
       :value="calculateBytesToMb(ramUsage.swapTotal) + ' MB'"
-      contextual-class="primary"
+      contextual-class="bg-blue-500"
       icon="microchip"
     ></DashboardBasicCard>
   </div>
 
-  <div class="row">
-    <DashboardCurrentRamUsageCard
-      :ram-usage="ramUsage"
-    ></DashboardCurrentRamUsageCard>
-  </div>
+  <DashboardCurrentRamUsageCard
+    :ram-usage="ramUsage"
+  ></DashboardCurrentRamUsageCard>
 </template>
 
 <script lang="ts">
@@ -41,29 +39,6 @@ export default defineComponent({
     }
   },
   methods: {
-    getContextualClass(load: number): string {
-      if (load < 25) {
-        return "info";
-      }
-
-      if (load < 50) {
-        return "primary";
-      }
-
-      if (load < 75) {
-        return "warning";
-      }
-
-      return "danger";
-    },
-    getBorderClass(): string {
-      return "";
-      // return this.border + "-" + this.getContextualClass(this.cpuLoad.currentload);
-    },
-    getTextClass(): string {
-      return "";
-      // return "text-" + this.getContextualClass(this.cpuLoad.currentload);
-    },
     calculateBytesToMb(bytes: number): number {
       return bytes / (1024 * 1024);
     }

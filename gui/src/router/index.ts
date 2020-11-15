@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/logs/:logId",
     name: "LogRecord",
     component: LogRecord
-  },
+  }
 ];
 
 const router = createRouter({
