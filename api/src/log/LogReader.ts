@@ -106,7 +106,6 @@ export default class logReader {
         }
 
         let filteredParts: LogRecord[] = this.filterMultipleLevels(parsedFile, requestLogLevels);
-        console.log(filteredParts);
 
 
         let linesCount = filteredParts.length;
