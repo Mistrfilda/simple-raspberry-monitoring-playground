@@ -19,14 +19,43 @@ export default class logController extends BaseController {
     }
 
     public getAppLogContents(req: Request, res: Response): void {
-        res.json(this.logReader.readFile(this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash)));
+        res.json(this.logReader.readFile(
+            this.appLogFolder,
+            this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash),
+            this.getNumberQueryParameter(req, 'offset'),
+            this.getNumberQueryParameter(req, 'limit')),
+        );
     };
 
     public getAppLogContentsFilterLogLevel(req: Request, res: Response): void {
-        res.json(this.logReader.readAndParseLogLevel(this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash), req.params.filtered));
+        res.json(this.logReader.readAndParseLogLevel(
+            this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash),
+            req.params.filtered,
+            this.getNumberQueryParameter(req, 'offset'),
+            this.getNumberQueryParameter(req, 'limit')
+            )
+        );
     };
 
     public getAppLogContentsFilterAboveLogLevel(req: Request, res: Response): void {
-        res.json(this.logReader.readAndParseAboveLogLevel(this.appLogFolder, this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash), req.params.filtered));
+        res.json(this.logReader.readAndParseAboveLogLevel(
+            this.appLogFolder,
+            this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash),
+            req.params.filtered,
+            this.getNumberQueryParameter(req, 'offset'),
+            this.getNumberQueryParameter(req, 'limit')
+            )
+        );
     };
+
+    public getAppLogContentsFilterMultipleLogLevels(req: Request, res: Response): void {
+        res.json(this.logReader.readAndParseMultipleLogLevels(
+            this.appLogFolder,
+            this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash),
+            this.getStringArrayQueryParameter(req, 'loglevels'),
+            this.getNumberQueryParameter(req, 'offset'),
+            this.getNumberQueryParameter(req, 'limit')
+            )
+        );
+    }
 }
