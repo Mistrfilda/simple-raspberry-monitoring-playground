@@ -11,7 +11,11 @@
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
           >
-            <div class="fixed inset-0" v-show="menuOpen" @click="menuOpen = false">
+            <div
+              class="fixed inset-0"
+              v-show="menuOpen"
+              @click="menuOpen = false"
+            >
               <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
             </div>
           </transition>
