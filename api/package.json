@@ -24,6 +24,7 @@
   "scripts": {
     "start": "tsc && DEBUG=express:* node .",
     "linter": "yarn eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w"
   }
 }

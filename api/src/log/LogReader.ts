@@ -3,6 +3,8 @@ import fs from 'fs';
 import {logLevel} from './LogLevel'
 import {LogRecord} from "./LogRecord";
 import {LogRecordFile} from "./LogRecordFile";
+import {LogRecordResponse} from "./LogRecordResponse";
+
 const md5 = require('md5');
 
 export default class logReader {
@@ -39,36 +41,91 @@ export default class logReader {
         return results;
     }
 
-    public readFile(folder: string, file: string): LogRecord[] {
+    public readFile(folder: string, file: string, offset: number | null = null, limit: number | null = null): LogRecordResponse {
         const fileContents = fs.readFileSync(path.join(folder, file), 'utf-8');
 
-        return fileContents.split("\n").filter((line: string) => {
+        let logRecordFiles = fileContents.split("\n").filter((line: string) => {
             return line !== '';
         }).map((line: string) => {
             return JSON.parse(line);
         });
+
+        let linesCount = logRecordFiles.length;
+
+        if (offset !== null && limit !== null) {
+            logRecordFiles = logRecordFiles.slice(offset, offset + limit);
+        }
+
+        return {
+            filtered: false,
+            linesCount: linesCount,
+            logRecordFiles: logRecordFiles,
+            limit: limit,
+            offset: offset
+        }
     }
 
-    public readAndParseLogLevel(folder: string, file: string, requestLogLevel: string): LogRecord[] {
-        const parsedFile = this.readFile(folder, file);
-        const filteredParts: LogRecord[] = [];
+    public readAndParseLogLevel(folder: string, file: string, requestLogLevel: string, offset?: number, limit?: number): LogRecordResponse {
+        const parsedFile = this.readFile(folder, file).logRecordFiles;
+        let filteredParts: LogRecord[] = [];
 
         if (!(requestLogLevel in logLevel)) {
             throw new Error('no no no');
         }
 
-        parsedFile.forEach(function (value: LogRecord) {
-            if (value.level_name === requestLogLevel.toUpperCase()) {
-                filteredParts.push(value);
+        for (let i = 0; i < parsedFile.length; i++) {
+            if (parsedFile[i].level_name === requestLogLevel.toUpperCase()) {
+                filteredParts.push(parsedFile[i]);
             }
-        })
+        }
 
-        return filteredParts;
+        let linesCount = filteredParts.length;
+
+        if (offset !== null && limit !== null) {
+            filteredParts = filteredParts.slice(offset, offset + limit);
+        }
+
+        return {
+            filtered: false,
+            linesCount: linesCount,
+            logRecordFiles: filteredParts,
+            limit: limit,
+            offset: offset
+        }
     }
 
-    public readAndParseAboveLogLevel(folder: string, file: string, requestLogLevel: string): LogRecord[] {
-        const parsedFile = this.readFile(folder, file);
-        const filteredParts: LogRecord[] = [];
+    public readAndParseMultipleLogLevels(folder: string, file: string, requestLogLevels: string[], offset?: number, limit?: number): LogRecordResponse {
+        const parsedFile = this.readFile(folder, file).logRecordFiles;
+
+        for (let i = 0; i < requestLogLevels.length; i++) {
+            if (!(requestLogLevels[i] in logLevel)) {
+                throw new Error('Invalid request log level');
+            }
+
+            requestLogLevels[i] = requestLogLevels[i].toUpperCase();
+        }
+
+        let filteredParts: LogRecord[] = this.filterMultipleLevels(parsedFile, requestLogLevels);
+        console.log(filteredParts);
+
+
+        let linesCount = filteredParts.length;
+
+        if (offset !== null && limit !== null) {
+            filteredParts = filteredParts.slice(offset, offset + limit);
+        }
+
+        return {
+            filtered: false,
+            linesCount: linesCount,
+            logRecordFiles: filteredParts,
+            limit: limit,
+            offset: offset
+        }
+    }
+
+    public readAndParseAboveLogLevel(folder: string, file: string, requestLogLevel: string, offset?: number, limit?: number): LogRecordResponse {
+        const parsedFile = this.readFile(folder, file).logRecordFiles;
 
         if (!(requestLogLevel in logLevel)) {
             throw new Error('no no no');
@@ -84,8 +141,26 @@ export default class logReader {
 
         desiredLogLevels.push(logLevel[logLevel.emergency].toUpperCase());
 
-        parsedFile.forEach(function (value: LogRecord) {
-            if (desiredLogLevels.includes(value.level_name)) {
+        let filteredParts: LogRecord[] = this.filterMultipleLevels(parsedFile, desiredLogLevels);
+        let linesCount = filteredParts.length;
+
+        if (offset !== null && limit !== null) {
+            filteredParts = filteredParts.slice(offset, offset + limit);
+        }
+
+        return {
+            filtered: false,
+            linesCount: linesCount,
+            logRecordFiles: filteredParts,
+            limit: limit,
+            offset: offset
+        }
+    }
+
+    private filterMultipleLevels(parsedLogRecords: LogRecord[], requestLogLevels: string[]): LogRecord[] {
+        let filteredParts: LogRecord[] = [];
+        parsedLogRecords.forEach(function (value: LogRecord) {
+            if (requestLogLevels.includes(value.level_name.toUpperCase())) {
                 filteredParts.push(value);
             }
         })
