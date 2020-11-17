@@ -29,13 +29,15 @@ export default class logReader {
         let results: LogRecordFile[] = [];
         const files = this.getList(folder);
         files.forEach(function (value: string) {
-            const fileStats = fs.statSync(path.join(folder, value));
-            results.push({
-                id: md5(value),
-                name: value,
-                fileSize: fileStats.size,
-                lastUpdatedAtTimestamp: fileStats.atimeMs,
-            });
+            if (value.startsWith('.') === false) {
+                const fileStats = fs.statSync(path.join(folder, value));
+                results.push({
+                    id: md5(value),
+                    name: value,
+                    fileSize: fileStats.size,
+                    lastUpdatedAtTimestamp: fileStats.atimeMs,
+                });
+            }
         })
 
         return results;
