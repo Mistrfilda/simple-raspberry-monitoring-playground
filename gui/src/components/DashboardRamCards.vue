@@ -30,7 +30,7 @@ export default defineComponent({
   name: "DashboardRamCards",
   props: {
     ramUsage: {
-      type: Object as PropType<SystemInformationResultValues.ramUsage>,
+      type: Object as PropType<SystemInformationResultValues.RamUsage>,
       required: true
     },
     border: {

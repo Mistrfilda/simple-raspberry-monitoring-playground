@@ -14,6 +14,13 @@ const globalFilters = {
   formatDate(date: Date): string {
     return date.toLocaleString();
     // return date.getFullYear() + '-' + date.getMonth() + '-' + date.getUTCDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ":" + date.getSeconds();
+  },
+  truncateText(text: string, length: number): string {
+    if (text.length <= length) {
+      return text;
+    }
+
+    return text.substr(0, length) + "...";
   }
 };
 

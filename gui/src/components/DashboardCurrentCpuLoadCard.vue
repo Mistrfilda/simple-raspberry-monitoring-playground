@@ -100,11 +100,11 @@ export default defineComponent({
   name: "DashboardCurrentCpuLoadCard",
   props: {
     cpuSpeed: {
-      type: Object as PropType<SystemInformationResultValues.cpuSpeedInfo>,
+      type: Object as PropType<SystemInformationResultValues.CpuSpeedInfo>,
       required: true
     },
     cpuLoad: {
-      type: Object as PropType<SystemInformationResultValues.currentCpuLoad>,
+      type: Object as PropType<SystemInformationResultValues.CurrentCpuLoad>,
       required: true
     },
     border: {

@@ -1,4 +1,4 @@
-export enum logLevel {
+export enum LogLevel {
   emergency = 0,
   alert = 1,
   critical = 2,
@@ -9,7 +9,7 @@ export enum logLevel {
   debug = 7
 }
 
-export enum logLevelNumber {
+export enum LogLevelNumber {
   emergency = 800,
   alert = 700,
   critical = 600,

@@ -136,7 +136,7 @@ export default defineComponent({
   name: "DashboardCurrentRamUsageCard",
   props: {
     ramUsage: {
-      type: Object as PropType<SystemInformationResultValues.ramUsage>,
+      type: Object as PropType<SystemInformationResultValues.RamUsage>,
       required: true
     },
     border: {

@@ -197,7 +197,7 @@ export default defineComponent({
     return {
       dataLoaded: false,
       values: {
-        type: Object as PropType<SystemInformationResultValues.allInformation>,
+        type: Object as PropType<SystemInformationResultValues.AllInformation>,
         required: true
       },
       availableTabs: [
@@ -241,7 +241,7 @@ export default defineComponent({
     },
     getBadgeForMenu(
       name: string,
-      values: SystemInformationResultValues.allInformation
+      values: SystemInformationResultValues.AllInformation
     ): DashboardMenuTabBadge {
       if (name === this.availableTabs[2].name) {
         return {

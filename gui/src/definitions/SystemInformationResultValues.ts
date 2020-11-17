@@ -1,36 +1,36 @@
 export namespace SystemInformationResultValues {
-  export interface cpuInfo {
+  export interface CpuInfo {
     manufacturer: string;
     brand: string;
     speed: string;
     cores: number;
   }
 
-  export interface temperatureInfo {
+  export interface TemperatureInfo {
     temperature: number;
   }
 
-  export interface cpuSpeedInfo {
+  export interface CpuSpeedInfo {
     min: number;
     max: number;
     avg: number;
     cores: number[];
   }
 
-  export interface currentCpuLoad {
+  export interface CurrentCpuLoad {
     currentload: number;
     currentloadUser: number;
     currentloadSystem: number;
-    cpuCoresLoads: cpuCoreLoadInfo[];
+    cpuCoresLoads: CpuCoreLoadInfo[];
   }
 
-  export interface cpuCoreLoadInfo {
+  export interface CpuCoreLoadInfo {
     load: number;
     loadUser: number;
     loadSystem: number;
   }
 
-  export interface ramUsage {
+  export interface RamUsage {
     total: number;
     free: number;
     used: number;
@@ -39,11 +39,11 @@ export namespace SystemInformationResultValues {
     swapUsed: number;
   }
 
-  export interface allInformation {
-    cpuInfo: cpuInfo;
-    cpuSpeedInfo: cpuSpeedInfo;
-    currentCpuLoadInfo: currentCpuLoad;
-    ramUsage: ramUsage;
-    temperatureInfo: temperatureInfo;
+  export interface AllInformation {
+    cpuInfo: CpuInfo;
+    cpuSpeedInfo: CpuSpeedInfo;
+    currentCpuLoadInfo: CurrentCpuLoad;
+    ramUsage: RamUsage;
+    temperatureInfo: TemperatureInfo;
   }
 }
