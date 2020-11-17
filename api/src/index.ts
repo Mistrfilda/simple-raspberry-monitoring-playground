@@ -33,6 +33,7 @@ const systemInformationController = new SystemInformationController();
 
 app.get('/app1/logs', (req: express.Request, res: express.Response) => { logController.getAppLogs(req, res) });
 app.get('/app1/logs/:logHash', (req: express.Request, res: express.Response) => { logController.getAppLogContents(req, res) });
+app.get('/app1/logs/:logHash/info', (req: express.Request, res: express.Response) => { logController.getFileInfo(req, res) });
 app.get('/app1/logs/:logHash/level/:filtered', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterLogLevel(req, res) })
 app.get('/app1/logs/:logHash/levels', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterMultipleLogLevels(req, res) })
 app.get('/app1/logs/:logHash/filter/:filtered', (req: express.Request, res: express.Response) => { logController.getAppLogContentsFilterAboveLogLevel(req, res) })

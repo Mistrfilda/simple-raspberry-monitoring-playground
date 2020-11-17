@@ -41,6 +41,17 @@ export default class logReader {
         return results;
     }
 
+    public getFileInfo(folder: string, name: string): LogRecordFile {
+        const fileStats = fs.statSync(path.join(folder, name));
+
+        return {
+            id: md5(name),
+            name: name,
+            fileSize: fileStats.size,
+            lastUpdatedAtTimestamp: fileStats.atimeMs,
+        };
+    }
+
     public readFile(folder: string, file: string, offset: number | null = null, limit: number | null = null): LogRecordResponse {
         const fileContents = fs.readFileSync(path.join(folder, file), 'utf-8');
 
@@ -61,7 +72,8 @@ export default class logReader {
             linesCount: linesCount,
             logRecordFiles: logRecordFiles,
             limit: limit,
-            offset: offset
+            offset: offset,
+            logRecordFileInfo: this.getFileInfo(folder, file)
         }
     }
 
@@ -90,7 +102,8 @@ export default class logReader {
             linesCount: linesCount,
             logRecordFiles: filteredParts,
             limit: limit,
-            offset: offset
+            offset: offset,
+            logRecordFileInfo: this.getFileInfo(folder, file)
         }
     }
 
@@ -119,7 +132,8 @@ export default class logReader {
             linesCount: linesCount,
             logRecordFiles: filteredParts,
             limit: limit,
-            offset: offset
+            offset: offset,
+            logRecordFileInfo: this.getFileInfo(folder, file)
         }
     }
 
@@ -152,7 +166,8 @@ export default class logReader {
             linesCount: linesCount,
             logRecordFiles: filteredParts,
             limit: limit,
-            offset: offset
+            offset: offset,
+            logRecordFileInfo: this.getFileInfo(folder, file)
         }
     }
 

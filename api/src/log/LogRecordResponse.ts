@@ -1,4 +1,5 @@
 import {LogRecord} from "./LogRecord";
+import {LogRecordFile} from "./LogRecordFile";
 
 export interface LogRecordResponse {
     filtered: boolean;
@@ -6,4 +7,5 @@ export interface LogRecordResponse {
     logRecordFiles: LogRecord[];
     limit?: number;
     offset?: number;
+    logRecordFileInfo: LogRecordFile;
 }

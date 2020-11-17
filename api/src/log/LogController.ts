@@ -18,6 +18,13 @@ export default class logController extends BaseController {
         res.json(this.logReader.getFullList(this.appLogFolder));
     }
 
+    public getFileInfo(req: Request, res: Response): void {
+        res.json(this.logReader.getFileInfo(
+            this.appLogFolder,
+            this.logReader.getFilenameFromHash(this.appLogFolder, req.params.logHash),
+        ));
+    }
+
     public getAppLogContents(req: Request, res: Response): void {
         res.json(this.logReader.readFile(
             this.appLogFolder,
