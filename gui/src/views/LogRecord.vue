@@ -69,7 +69,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import LogRecordTable from "@/components/LogRecordTable.vue";
+import LogRecordTable from "@/components/LogRecord/LogRecordTable.vue";
 import { LogRecordFile } from "@/definitions/LogRecordFile";
 import Axios from "axios";
 

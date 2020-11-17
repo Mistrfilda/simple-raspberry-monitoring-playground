@@ -2,16 +2,33 @@
   <div class="flex flex-col my-3" v-if="dataLoaded === true">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="bg-gray-50 w-ful mb-3 shadow rounded-lg text-gray-900">
-          <div
-            class="-ml-4 -mt-2 flex items-center md:justify-between justify-start flex-wrap sm:flex-no-wrap px-3 py-2"
-          >
-            <div class="ml-4 mt-2">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Level filters
-              </h3>
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
+            <div
+              class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-no-wrap"
+            >
+              <div class="ml-4 mt-4">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  Available filters
+                </h3>
+                <p class="mt-1 text-sm leading-5 text-gray-500">
+                  Select desired levels by clicking on buttons bellow
+                </p>
+              </div>
+              <div class="ml-4 mt-4 flex-shrink-0 hidden md:block">
+                <span class="inline-flex rounded-md shadow-sm">
+                  <button
+                    @click="resetSelectedLevels()"
+                    type="button"
+                    class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-500 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-600 active:bg-blue-700"
+                  >
+                    Reset filters
+                  </button>
+                </span>
+              </div>
             </div>
-            <div class="ml-4 mt-2 flex-shrink-0">
+
+            <div class="mt-2 flex-shrink-0 block md:hidden">
               <span class="inline-flex rounded-md shadow-sm">
                 <button
                   @click="resetSelectedLevels()"
@@ -23,54 +40,57 @@
               </span>
             </div>
           </div>
-          <div class="flex items-center md:justify-between justify-start">
-            <span
-              class="inline-flex px-3 py-2"
-              v-for="logLevel in availableFilterLevels"
-              v-bind:key="logLevel"
-            >
-              <button
-                type="button"
-                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white focus:outline-none focus:shadow-outline-indigo transition ease-in-out duration-150"
-                :class="[
-                  selectedLevels.includes(logLevel.name)
-                    ? logLevel.activeClasses
-                    : logLevel.nonActiveClasses
-                ]"
-                @click="changeSelectedLevels(logLevel.name)"
+          <div class="px-4 py-5 sm:p-6">
+            <div class="flex items-center md:justify-between justify-start">
+              <span
+                class="inline-flex pr-3 py-2 md:pr-0 md:py-0"
+                v-for="logLevel in availableFilterLevels"
+                v-bind:key="logLevel"
               >
-                {{ logLevel.label }}
-              </button>
-            </span>
+                <button
+                  type="button"
+                  class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white focus:outline-none focus:shadow-outline-indigo transition ease-in-out duration-150"
+                  :class="[
+                    selectedLevels.includes(logLevel.name)
+                      ? logLevel.activeClasses
+                      : logLevel.nonActiveClasses
+                  ]"
+                  @click="changeSelectedLevels(logLevel.name)"
+                >
+                  {{ logLevel.label }}
+                </button>
+              </span>
+            </div>
           </div>
         </div>
+
         <div
-          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-3"
         >
           <table class="min-w-full divide-y divide-gray-200 table-auto">
             <thead>
               <tr>
                 <th
-                  class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-6 py-3 bg-white text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Message
                 </th>
                 <th
-                  class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-6 py-3 bg-white text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Date
                 </th>
                 <th
-                  class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-6 py-3 bg-white text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Level
                 </th>
                 <th
-                  class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-6 py-3 bg-white text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Channel
                 </th>
-                <th class="px-6 py-3 bg-gray-50"></th>
+                <th class="px-6 py-3 bg-white"></th>
               </tr>
             </thead>
             <tbody>
@@ -110,8 +130,11 @@
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"
                 >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                    >Edit</a
+                  <a
+                    @click="showLogRecordModal(logRecord)"
+                    href="#"
+                    class="text-blue-500 hover:text-blue-900"
+                    >Detail</a
                   >
                 </td>
               </tr>
@@ -120,20 +143,6 @@
           <div
             class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
           >
-            <!--            <div class="flex-1 flex justify-between sm:hidden">-->
-            <!--              <a-->
-            <!--                  href="#"-->
-            <!--                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"-->
-            <!--              >-->
-            <!--                Previous-->
-            <!--              </a>-->
-            <!--              <a-->
-            <!--                  href="#"-->
-            <!--                  class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"-->
-            <!--              >-->
-            <!--                Next-->
-            <!--              </a>-->
-            <!--            </div>-->
             <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between">
               <div>
                 <p class="text-sm leading-5 text-gray-700">
@@ -214,16 +223,24 @@
       </div>
     </div>
   </div>
+  <log-record-modal
+    v-show="modalLogRecord !== null"
+    v-on:hide-modal="hideLogRecordModal"
+    :log-record="modalLogRecord"
+  ></log-record-modal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Axios, { AxiosRequestConfig } from "axios";
-import { LogLevel, LogLevelNumber } from "@/definitions/LogLevel";
+import { LogLevel } from "@/definitions/LogLevel";
 import { LogRecordResponse } from "@/definitions/LogRecordResponse";
 import { PaginatorItem } from "@/definitions/PaginatorItem";
 import { LogRecordTableFilter } from "@/definitions/LogRecordTableFilter";
 import { getPaginator } from "@/helpers/PaginationService";
+import LogRecordModal from "@/components/LogRecord/LogRecordModal.vue";
+import { LogRecord } from "@/definitions/LogRecord";
+import { getLogLevelBadgeColor as badgeLevelColor } from "@/helpers/LogRecord/LogLevelHelper";
 
 export default defineComponent({
   name: "LogRecordTable",
@@ -306,8 +323,12 @@ export default defineComponent({
       dataLoaded: false,
       limit: 10,
       offset: 0,
-      paginator: [] as PaginatorItem[]
+      paginator: [] as PaginatorItem[],
+      modalLogRecord: {} as LogRecord | null
     };
+  },
+  created() {
+    this.modalLogRecord = null;
   },
   mounted() {
     this.fetchLogsRecords(this.logId);
@@ -335,27 +356,8 @@ export default defineComponent({
       this.logRecords = result.data;
       this.dataLoaded = true;
     },
-    getLogLevelBadgeColor(channelNumber: number): string {
-      switch (channelNumber) {
-        case LogLevelNumber.debug:
-          return "text-gray-800 bg-gray-300";
-        case LogLevelNumber.info:
-          return "text-green-800 bg-green-100";
-        case LogLevelNumber.notice:
-          return "text-yellow-800 bg-yellow-100";
-        case LogLevelNumber.warning:
-          return "text-orange-800 bg-orange-100";
-        case LogLevelNumber.error:
-          return "text-red-800 bg-red-100";
-        case LogLevelNumber.critical:
-          return "text-red-800 bg-red-100";
-        case LogLevelNumber.alert:
-          return "text-red-800 bg-red-100";
-        case LogLevelNumber.emergency:
-          return "text-red-800 bg-red-100";
-        default:
-          throw new Error("Invalid log level");
-      }
+    getLogLevelBadgeColor(levelNumber: number): string {
+      return badgeLevelColor(levelNumber);
     },
     changeSelectedLevels(name: string): void {
       if (this.selectedLevels.includes(name)) {
@@ -399,8 +401,16 @@ export default defineComponent({
     },
     getPaginator(): PaginatorItem[] {
       return getPaginator(this.offset, this.limit, this.logRecords.linesCount);
+    },
+    showLogRecordModal(logRecord: LogRecord): void {
+      this.modalLogRecord = logRecord;
+    },
+    hideLogRecordModal(): void {
+      this.modalLogRecord = null;
     }
   },
-  components: {}
+  components: {
+    LogRecordModal
+  }
 });
 </script>
