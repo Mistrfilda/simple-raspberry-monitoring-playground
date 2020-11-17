@@ -149,6 +149,7 @@
               <div>
                 <nav class="relative z-0 inline-flex shadow-sm">
                   <a
+                    @click="arrowLeft()"
                     href="#"
                     class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                     aria-label="Previous"
@@ -170,7 +171,11 @@
                   <a
                     v-for="paginationItem in getPaginator()"
                     v-bind:key="paginationItem.id"
-                    @click="changePagination(paginationItem.offset)"
+                    @click="
+                      paginationItem.disabled
+                        ? ''
+                        : changePagination(paginationItem.offset)
+                    "
                     href="#"
                     class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
                     :class="[
@@ -182,6 +187,7 @@
                     {{ paginationItem.label }}
                   </a>
                   <a
+                    @click="arrowRight()"
                     href="#"
                     class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                     aria-label="Next"
@@ -216,6 +222,8 @@ import Axios, { AxiosRequestConfig } from "axios";
 import { LogLevel, LogLevelNumber } from "@/definitions/LogLevel";
 import { LogRecordResponse } from "@/definitions/LogRecordResponse";
 import { PaginatorItem } from "@/definitions/PaginatorItem";
+import { LogRecordTableFilter } from "@/definitions/LogRecordTableFilter";
+import { getPaginator } from "@/helpers/PaginationService";
 
 export default defineComponent({
   name: "LogRecordTable",
@@ -293,7 +301,7 @@ export default defineComponent({
           nonActiveClasses:
             "bg-white-600 border-full border-red-500 text-red-500 hover:bg-red-500 focus:border-red-700 active:bg-red-700 hover:text-white"
         }
-      ],
+      ] as LogRecordTableFilter[],
       selectedLevels: ["all"],
       dataLoaded: false,
       limit: 10,
@@ -377,183 +385,20 @@ export default defineComponent({
       this.offset = offset;
       this.fetchLogsRecords(this.logId);
     },
+    arrowLeft(): void {
+      if (this.offset !== 0) {
+        this.offset = this.offset - this.limit;
+        this.fetchLogsRecords(this.logId);
+      }
+    },
+    arrowRight(): void {
+      if (this.offset + this.limit < this.logRecords.linesCount) {
+        this.offset = this.offset + this.limit;
+        this.fetchLogsRecords(this.logId);
+      }
+    },
     getPaginator(): PaginatorItem[] {
-      const items: PaginatorItem[] = [];
-
-      const lastItemNumber = Math.ceil(this.logRecords.linesCount / this.limit);
-      const currentActive = this.offset / this.limit + 1;
-
-      //FIRST ELEMENT
-      items.push({
-        id: 1,
-        label: "1",
-        offset: 0,
-        disabled: false,
-        isFirst: true,
-        isLast: this.logRecords.linesCount < this.limit,
-        active: this.offset === 0
-      });
-
-      //RETURN IF LESS THEN LIMIT OF LINES
-      if (this.logRecords.linesCount < this.limit) {
-        return items;
-      }
-
-      //CALCULATE IF ITEMS ARE LESS THAN 7 * THIS.LIMIT AND RETURN
-      if (lastItemNumber < 9) {
-        for (let i = 2; i <= 9; i++) {
-          if (lastItemNumber < i) {
-            return items;
-          }
-
-          items.push({
-            id: i,
-            label: String(i),
-            offset: this.limit * (i - 1),
-            disabled: false,
-            isFirst: false,
-            isLast: this.logRecords.linesCount <= this.limit * i,
-            active: this.offset === this.limit * (i - 1)
-          });
-        }
-
-        return items;
-      }
-
-      if (currentActive !== 1 && currentActive !== lastItemNumber) {
-        //PUSH CURRENT ACTIVE
-        items.push({
-          id: currentActive,
-          label: String(currentActive),
-          offset: this.limit * (currentActive - 1),
-          disabled: false,
-          isFirst: false,
-          isLast: this.logRecords.linesCount <= this.limit * currentActive,
-          active: this.offset === this.limit * (currentActive - 1)
-        });
-      }
-
-      let rightValue = 0;
-      let leftValue = 0;
-      //PUSH NEIGHBORHOODS
-      for (
-        let currentActiveHelper = 0;
-        currentActiveHelper < 2;
-        currentActiveHelper++
-      ) {
-        //TO THE RIGHT
-        rightValue = currentActive + (currentActiveHelper + 1);
-
-        if (rightValue < lastItemNumber) {
-          items.push({
-            id: rightValue,
-            label: String(rightValue),
-            offset: this.limit * (rightValue - 1),
-            disabled: false,
-            isFirst: false,
-            isLast: this.logRecords.linesCount <= this.limit * rightValue,
-            active: this.offset === this.limit * (rightValue - 1)
-          });
-        }
-
-        //TO THE LEFT
-        leftValue = currentActive + (currentActiveHelper + 1) * -1;
-        if (leftValue > 1) {
-          items.push({
-            id: leftValue,
-            label: String(leftValue),
-            offset: this.limit * (leftValue - 1),
-            disabled: false,
-            isFirst: false,
-            isLast: this.logRecords.linesCount <= this.limit * leftValue,
-            active: this.offset === this.limit * (leftValue - 1)
-          });
-        }
-      }
-
-      //LAST ELEMENT
-      items.push({
-        id: lastItemNumber,
-        label: String(lastItemNumber),
-        offset: this.limit * (lastItemNumber - 1),
-        disabled: false,
-        isFirst: false,
-        isLast: this.logRecords.linesCount <= this.limit * lastItemNumber,
-        active: this.offset === this.limit * (lastItemNumber - 1)
-      });
-
-      //PUSH MIDDLE ELEMENT ON FIRST AND LAST PAGE
-      if (items.length < 7) {
-        const middleElement = Math.ceil(lastItemNumber / 2);
-
-        items.push({
-          id: middleElement,
-          label: String(middleElement),
-          offset: this.limit * (middleElement - 1),
-          disabled: false,
-          isFirst: false,
-          isLast: this.logRecords.linesCount <= this.limit * middleElement,
-          active: false
-        });
-
-        //AROUND MIDDLE ELEMENT
-        items.push({
-          id: middleElement + 1,
-          label: "...",
-          offset: this.limit * (middleElement - 1 + 1),
-          disabled: false,
-          isFirst: false,
-          isLast:
-            this.logRecords.linesCount <= this.limit * (middleElement + 1),
-          active: false
-        });
-
-        //AROUND MIDDLE ELEMENT
-        items.push({
-          id: middleElement - 1,
-          label: "...",
-          offset: this.limit * (middleElement - 1 - 1),
-          disabled: false,
-          isFirst: false,
-          isLast:
-            this.logRecords.linesCount <= this.limit * (middleElement - 1),
-          active: false
-        });
-      } else {
-        if (leftValue - 1 > 1) {
-          items.push({
-            id: leftValue - 1,
-            label: "...",
-            offset: 0,
-            disabled: true,
-            isFirst: false,
-            isLast: false,
-            active: false
-          });
-        }
-
-        if (rightValue + 1 < lastItemNumber) {
-          items.push({
-            id: rightValue + 1,
-            label: "...",
-            offset: 0,
-            disabled: true,
-            isFirst: false,
-            isLast: false,
-            active: false
-          });
-        }
-      }
-
-      items.sort(function(a: PaginatorItem, b: PaginatorItem) {
-        if (a.id < b.id) {
-          return -1;
-        }
-
-        return 1;
-      });
-
-      return items;
+      return getPaginator(this.offset, this.limit, this.logRecords.linesCount);
     }
   },
   components: {}
