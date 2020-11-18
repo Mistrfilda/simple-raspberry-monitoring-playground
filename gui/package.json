@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
-    "@tailwindcss/ui": "^0.7.2",
+    "autoprefixer": "^10.0.2",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "popper.js": "^1.16.1",
-    "tailwindcss": "^1.9.6",
+    "postcss": "^8.1.7",
+    "tailwindcss": "^2.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
