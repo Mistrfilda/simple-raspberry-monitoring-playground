@@ -1,13 +1,12 @@
 <template>
-  <component :is="this.$route.meta.layout || 'div'">
-    <router-view></router-view>
-  </component>
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "App"
+  name: "BlankLayout",
+  components: {}
 });
 </script>

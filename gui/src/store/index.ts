@@ -4,7 +4,7 @@ export default createStore({
   state: {
     availableEndpoints: [
       {
-        name: "App 1",
+        name: "Localhost",
         url: "http://localhost:30300/app1"
       }
     ]
