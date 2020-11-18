@@ -38,7 +38,7 @@
                 v-bind:key="availableTab.name"
                 @click="switchTab(availableTab.name)"
                 href="#"
-                class="whitespace-no-wrap py-4 px-1 border-b-2 font-medium text-sm leading-5 hover:text-gray-700 hover:border-gray-300 focus:outline-none"
+                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm leading-5 hover:text-gray-700 hover:border-gray-300 focus:outline-none"
                 v-bind:class="[
                   currentTab === availableTab.name
                     ? 'border-blue-500 text-blue-500 focus:text-blue-500 focus:border-blue-500'
