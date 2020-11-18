@@ -144,7 +144,7 @@
           <div class="flex-1 flex"></div>
           <div class="ml-4 flex items-center md:ml-6">
             <div
-              class="rounded-2xl bg-orange-500 p-2 text-white text-sm leading-6 font-medium"
+              class="rounded-lg px-2 bg-blue-500 p-1 text-white text-sm leading-6 font-medium"
             >
               <span class="text-lg">
                 <i class="fas fa-server"></i>
