@@ -1,4 +1,19 @@
 <template>
+  <transition
+    enter-active-class="ease-out duration-300"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="ease-in duration-200"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <log-record-modal
+      v-if="modalLogRecord !== null"
+      v-on:hide-modal="hideLogRecordModal"
+      :log-record="modalLogRecord"
+    ></log-record-modal>
+  </transition>
+
   <div class="flex flex-col my-3" v-if="dataLoaded === true">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -223,11 +238,6 @@
       </div>
     </div>
   </div>
-  <log-record-modal
-    v-show="modalLogRecord !== null"
-    v-on:hide-modal="hideLogRecordModal"
-    :log-record="modalLogRecord"
-  ></log-record-modal>
 </template>
 
 <script lang="ts">
