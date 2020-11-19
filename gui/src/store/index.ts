@@ -1,15 +1,41 @@
 import { createStore } from "vuex";
+import { ApiEndpoint } from "@/definitions/ApiEndpoint";
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
     availableEndpoints: [
       {
+        id: 1,
         name: "Localhost",
-        url: "http://localhost:30300/app1"
+        ipAddress: "128.0.0.1",
+        baseUrl: "http://localhost:30300/app1"
+      },
+      {
+        id: 2,
+        name: "Raspbberry 1",
+        ipAddress: "192.168.1.1",
+        baseUrl: "http://localhost:30300/app1"
+      },
+      {
+        id: 3,
+        name: "Raspbberry 2",
+        ipAddress: "192.168.1.2",
+        baseUrl: "http://localhost:30300/app1"
       }
-    ]
+    ] as ApiEndpoint[],
+    currentEndpoint: null as ApiEndpoint | null
   },
-  mutations: {},
+  mutations: {
+    setCurrentEndpoint(state, endpointId: number) {
+      for (const endpoint of state.availableEndpoints) {
+        if (endpoint.id === endpointId) {
+          state.currentEndpoint = endpoint;
+        }
+      }
+    }
+  },
   actions: {},
-  modules: {}
+  modules: {},
+  plugins: [createPersistedState()]
 });

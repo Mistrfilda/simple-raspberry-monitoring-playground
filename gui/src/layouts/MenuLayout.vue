@@ -143,14 +143,15 @@
         <div class="flex-1 px-4 flex justify-between">
           <div class="flex-1 flex"></div>
           <div class="ml-4 flex items-center md:ml-6">
-            <div
+            <router-link
               class="rounded-lg px-2 bg-blue-500 p-1 text-white text-sm leading-6 font-medium"
+              to="/server-login"
             >
               <span class="text-lg">
                 <i class="fas fa-server"></i>
               </span>
-              Current server: 192.168.1.183
-            </div>
+              {{ currentApiEndpoint.name }} - {{ currentApiEndpoint.ipAddress }}
+            </router-link>
           </div>
         </div>
       </div>
@@ -167,6 +168,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapState } from "vuex";
+import { State } from "@/definitions/State";
+import { ApiEndpoint } from "@/definitions/ApiEndpoint";
 
 export default defineComponent({
   name: "MenuLayout",
@@ -198,6 +202,11 @@ export default defineComponent({
       menuOpen: false
     };
   },
+  computed: mapState({
+    currentApiEndpoint(state: State): ApiEndpoint | null {
+      return state.currentEndpoint;
+    }
+  }),
   methods: {
     getMenuItemClass(name: string): string {
       if (name === this.$route.name) {
