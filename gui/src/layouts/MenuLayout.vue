@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen flex overflow-hidden bg-gray-100">
+    <!-- MOBILE MENU -->
     <transition enter-active-class="delay-300" leave-active-class="delay-300">
       <div v-show="menuOpen">
         <div class="fixed inset-0 flex z-40">
@@ -86,6 +87,7 @@
         </div>
       </div>
     </transition>
+    <!-- END OF MOBILE MENU -->
 
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
@@ -99,7 +101,7 @@
           </div>
           <div class="flex-1 flex flex-col overflow-y-auto">
             <nav
-              class="flex-1 px-2 py-4 bg-gradient-to-b from-blue-600 to-blue-500 space-y-1"
+              class="flex-1 px-2 py-4 bg-gradient-to-b from-blue-600 to-blue-400 space-y-1"
             >
               <router-link
                 v-for="menuItem in menuItems"

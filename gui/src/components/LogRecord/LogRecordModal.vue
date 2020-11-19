@@ -41,9 +41,29 @@
         >
           <div v-if="logRecord !== null">
             <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Detail of log record
-              </h3>
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  Detail of log record
+                </h3>
+                <button
+                  @click="hideModal"
+                  class="rounded-full border border-gray-300 focus:outline-none"
+                >
+                  <svg
+                    class="h-6 w-6 text-gray-900"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
               <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500"></p>
             </div>
             <div class="px-4 py-5 sm:p-0">
