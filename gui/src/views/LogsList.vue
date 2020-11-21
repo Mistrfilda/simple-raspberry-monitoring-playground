@@ -68,7 +68,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import LogsListTable from "@/components/LogsListTable.vue";
-import Axios from "axios";
 import { LogRecordFile } from "@/definitions/LogRecordFile";
 
 export default defineComponent({
@@ -86,7 +85,7 @@ export default defineComponent({
   },
   methods: {
     async fetchLogslist(): Promise<void> {
-      const result = await Axios.get("http://localhost:30300/app1/logs");
+      const result = await this.$store.getters.getAxiosInstance.get("logs");
       this.logRecordsFiles = result.data;
       this.dataLoaded = true;
     }

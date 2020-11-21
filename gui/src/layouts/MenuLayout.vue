@@ -30,7 +30,7 @@
             leave-to-class="-translate-x-full"
           >
             <div
-              class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gradient-to-b from-blue-600 to-blue-400"
+              class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gradient-to-b from-blue-700 to-blue-400"
               v-show="menuOpen"
             >
               <div class="absolute top-0 right-0 -mr-14 p-1">
@@ -92,7 +92,7 @@
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
         <div class="flex flex-col h-0 flex-1">
-          <div class="flex items-center h-16 flex-shrink-0 px-4 bg-blue-600">
+          <div class="flex items-center h-16 flex-shrink-0 px-4 bg-blue-700">
             <div
               class="text-2xl font-bold leading-7 text-white w-full text-center rounded-2xl bg-blue-500 px-2 py-3"
             >
@@ -101,7 +101,7 @@
           </div>
           <div class="flex-1 flex flex-col overflow-y-auto">
             <nav
-              class="flex-1 px-2 py-4 bg-gradient-to-b from-blue-600 to-blue-400 space-y-1"
+              class="flex-1 px-2 py-4 bg-gradient-to-b from-blue-700 to-blue-400 space-y-1"
             >
               <router-link
                 v-for="menuItem in menuItems"

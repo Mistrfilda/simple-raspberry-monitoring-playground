@@ -186,7 +186,6 @@ import { defineComponent, PropType } from "vue";
 import DashboardBasicCard from "@/components/DashboardBasicCard.vue";
 import DashboardCurrentCpuLoadCard from "@/components/DashboardCurrentCpuLoadCard.vue";
 import DashboardRamCards from "@/components/DashboardRamCards.vue";
-import Axios from "axios";
 import { SystemInformationResultValues } from "@/definitions/SystemInformationResultValues";
 import DashboardCurrentRamUsageCard from "@/components/DashboardCurrentRamUsageCard.vue";
 import DashboardMenuTabBadge from "@/definitions/DashboardMenuTabBadge";
@@ -230,8 +229,8 @@ export default defineComponent({
   },
   methods: {
     async fetchDashboardValues(): Promise<void> {
-      const result = await Axios.get(
-        "http://localhost:30300/app1/system/getAll"
+      const result = await this.$store.getters.getAxiosInstance.get(
+        "system/getAll"
       );
       this.values = result.data;
       this.dataLoaded = true;

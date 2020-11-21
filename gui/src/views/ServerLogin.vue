@@ -9,6 +9,34 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
+      <div
+        v-if="serverSelectError"
+        class="bg-red-100 border-l-4 border-red-400 p-4 mb-5"
+      >
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg
+              class="h-5 w-5 text-red-700"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-red-700">
+              Selected server is offline
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div>
         <fieldset>
           <legend class="sr-only">
@@ -51,10 +79,11 @@
                         : 'text-gray-900'
                     "
                   >
-                    {{ endpoint.baseUrl }}
+                    {{ endpoint.ipAddress }}
                   </span>
                 </p>
                 <p
+                  v-if="apiEndpointStatusesLoaded === true"
                   id="plan-option-limit-0"
                   class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-right"
                   :class="
@@ -64,7 +93,32 @@
                       : 'text-gray-500'
                   "
                 >
-                  {{ endpoint.ipAddress }}
+                  <span
+                    v-if="getEndpointStatus(endpoint.id)"
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"
+                  >
+                    <svg
+                      class="-ml-0.5 mr-1.5 h-2 w-2 text-green-800"
+                      fill="currentColor"
+                      viewBox="0 0 8 8"
+                    >
+                      <circle cx="4" cy="4" r="3" />
+                    </svg>
+                    Online
+                  </span>
+                  <span
+                    v-else
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-red-100 text-red-800"
+                  >
+                    <svg
+                      class="-ml-0.5 mr-1.5 h-2 w-2 text-red-800"
+                      fill="currentColor"
+                      viewBox="0 0 8 8"
+                    >
+                      <circle cx="4" cy="4" r="3" />
+                    </svg>
+                    Offline
+                  </span>
                 </p>
               </div>
             </li>
@@ -90,12 +144,19 @@ import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import { State } from "@/definitions/State";
 import { ApiEndpoint } from "@/definitions/ApiEndpoint";
+import { getAxiosInstance } from "@/api/AxiosService";
+import { ApiEndpointStatus } from "@/definitions/ApiEndpointStatus";
 
+// noinspection PointlessBooleanExpressionJS
 export default defineComponent({
   name: "ServerLogin",
   data() {
     return {
-      currentlySelectedServerId: null as number | null
+      currentlySelectedServerId: null as number | null,
+      dataLoaded: false,
+      apiEndpointStatuses: [] as ApiEndpointStatus[],
+      apiEndpointStatusesLoaded: false,
+      serverSelectError: false
     };
   },
   computed: mapState({
@@ -111,8 +172,64 @@ export default defineComponent({
       return state.availableEndpoints;
     }
   }),
+  mounted() {
+    this.fetchEndpointStatuses();
+    setInterval(() => this.fetchEndpointStatuses(), 5000);
+  },
+  methods: {
+    async fetchEndpointStatuses(): Promise<void> {
+      const results = [];
+      for (let i = 0; i < this.availableEndpoints.length; i++) {
+        const result = await this.getInstanceStatus(this.availableEndpoints[i]);
+        results.push({
+          id: this.availableEndpoints[i].id,
+          online: result
+        });
+      }
+
+      this.apiEndpointStatuses = results;
+      this.apiEndpointStatusesLoaded = true;
+    },
+    async getInstanceStatus(apiEndpoint: ApiEndpoint): Promise<boolean> {
+      try {
+        await getAxiosInstance(apiEndpoint).get("status");
+        return true;
+      } catch (error) {
+        return false;
+      }
+    },
+    getEndpointStatus(id: number): boolean {
+      console.log(id);
+      console.log(this.apiEndpointStatuses);
+      const result:
+        | ApiEndpointStatus[]
+        | undefined = this.apiEndpointStatuses.filter(function(
+        status: ApiEndpointStatus
+      ): status is ApiEndpointStatus {
+        return status.id === id;
+      });
+
+      if (result === undefined || result.length !== 1) {
+        throw new Error("Endpoint status not found!");
+      }
+
+      return result[0].online;
+    }
+  },
   watch: {
     currentlySelectedServerId: function() {
+      if (this.currentlySelectedServerId === null) {
+        return;
+      }
+
+      if (
+        this.apiEndpointStatusesLoaded !== false &&
+        this.getEndpointStatus(this.currentlySelectedServerId) === false
+      ) {
+        this.serverSelectError = true;
+        return;
+      }
+
       this.$store.commit("setCurrentEndpoint", this.currentlySelectedServerId);
     }
   },

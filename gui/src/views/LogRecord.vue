@@ -71,7 +71,6 @@
 import { defineComponent } from "vue";
 import LogRecordTable from "@/components/LogRecord/LogRecordTable.vue";
 import { LogRecordFile } from "@/definitions/LogRecordFile";
-import Axios from "axios";
 
 export default defineComponent({
   name: "LogRecord",
@@ -87,8 +86,8 @@ export default defineComponent({
   },
   methods: {
     async fetchFileInfo(): Promise<void> {
-      const result = await Axios.get(
-        "http://localhost:30300/app1/logs/" + this.logId + "/info"
+      const result = await this.$store.getters.getAxiosInstance.get(
+        "logs/" + this.logId + "/info"
       );
       this.logFile = result.data;
       this.dataLoaded = true;

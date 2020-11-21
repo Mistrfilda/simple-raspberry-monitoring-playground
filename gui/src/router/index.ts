@@ -54,15 +54,12 @@ const router = createRouter({
   routes
 });
 
-console.log(store.state.currentEndpoint);
-
 router.beforeEach(
   (
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext
   ) => {
-    console.log(to.meta.selectedServer);
     if (
       to.meta.selectedServer === true &&
       store.state.currentEndpoint === null

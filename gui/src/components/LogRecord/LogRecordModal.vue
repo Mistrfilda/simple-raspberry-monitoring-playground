@@ -46,14 +46,18 @@
                   Detail of log record
                 </h3>
                 <button
-                  @click="hideModal"
-                  class="rounded-full border border-gray-300 focus:outline-none"
+                  @click="hideModal()"
+                  class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
+                  <span class="sr-only">Close panel</span>
+                  <!-- Heroicon name: x -->
                   <svg
-                    class="h-6 w-6 text-gray-900"
-                    stroke="currentColor"
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path
                       stroke-linecap="round"
