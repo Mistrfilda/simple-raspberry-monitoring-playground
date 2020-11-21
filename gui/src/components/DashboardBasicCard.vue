@@ -59,7 +59,7 @@ export default defineComponent({
       default: "bg-blue-500"
     },
     icon: String,
-    value: String,
+    value: [String, Number],
     text: String
   },
   methods: {
