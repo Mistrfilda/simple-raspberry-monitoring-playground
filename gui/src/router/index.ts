@@ -51,7 +51,9 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: process.env.IS_ELECTRON ? createWebHashHistory() : createWebHistory(),
+  history: process.env.IS_ELECTRON
+    ? createWebHashHistory()
+    : createWebHistory(),
   routes
 });
 

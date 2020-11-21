@@ -57,7 +57,7 @@
               </div>
               <div class="flex-shrink-0 flex items-center px-4">
                 <div
-                  class="text-2xl font-bold leading-7 text-white w-full text-center rounded-2xl bg-blue-500 px-2 py-3"
+                  class="text-2xl font-bold leading-7 text-white w-full text-center rounded-2xl bg-blue-700 px-2 py-3"
                 >
                   Monitoring
                 </div>
@@ -71,11 +71,12 @@
                     :to="menuItem.link"
                     :class="getMobileMenuItemClass(menuItem.name)"
                   >
-                    <i
-                      class="mr-4 text-gray-300 group-hover:text-gray-300 group-focus:text-gray-300 transition ease-in-out duration-150 fa fa-2x"
-                      :class="'fa-' + menuItem.icon"
-                    ></i>
-                    {{ menuItem.label }}
+                    <span class="mr-3 text-white group-hover:text-gray-300">
+                      <i class="fas fa-lg" :class="'fa-' + menuItem.icon"></i>
+                    </span>
+                    <span>
+                      {{ menuItem.label }}
+                    </span>
                   </router-link>
                 </nav>
               </div>
@@ -94,7 +95,7 @@
         <div class="flex flex-col h-0 flex-1">
           <div class="flex items-center h-16 flex-shrink-0 px-4 bg-blue-700">
             <div
-              class="text-2xl font-bold leading-7 text-white w-full text-center rounded-2xl bg-blue-500 px-2 py-3"
+              class="text-2xl font-bold leading-7 text-white w-full text-center rounded-2xl bg-blue-900 px-2 py-3"
             >
               Monitoring
             </div>
@@ -107,13 +108,15 @@
                 v-for="menuItem in menuItems"
                 v-bind:key="menuItem.id"
                 :to="menuItem.link"
+                class="group flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md transition ease-in-out duration-150"
                 :class="getMenuItemClass(menuItem.name)"
               >
-                <i
-                  class="mr-3 text-gray-300 group-hover:text-gray-300 group-focus:text-gray-300 transition ease-in-out duration-150 fa fa-2x"
-                  :class="'fa-' + menuItem.icon"
-                ></i>
-                {{ menuItem.label }}
+                <span class="mr-3 text-white group-hover:text-gray-300">
+                  <i class="fas fa-lg" :class="'fa-' + menuItem.icon"></i>
+                </span>
+                <span>
+                  {{ menuItem.label }}
+                </span>
               </router-link>
             </nav>
           </div>
@@ -250,17 +253,17 @@ export default defineComponent({
   methods: {
     getMenuItemClass(name: string): string {
       if (name === this.$route.name) {
-        return "group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md bg-blue-900 focus:outline-none transition ease-in-out duration-150";
+        return "text-white bg-blue-900 focus:outline-none";
       }
 
-      return "group flex items-center px-2 py-2 text-sm leading-5 font-medium text-gray-300 rounded-md hover:text-white hover:bg-blue-700 focus:outline-none focus:text-white transition ease-in-out duration-150";
+      return "text-gray-300 hover:text-white hover:bg-blue-800 focus:outline-none focus:text-white";
     },
     getMobileMenuItemClass(name: string): string {
       if (name === this.$route.name) {
-        return "group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-gray-900 focus:outline-none focus:bg-blue-700 transition ease-in-out duration-150";
+        return "group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-blue-900 focus:outline-none focus:bg-blue-800 transition ease-in-out duration-150";
       }
 
-      return "group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-blue-700 transition ease-in-out duration-150";
+      return "group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-300 hover:text-white hover:bg-blue-800 focus:outline-none focus:text-white focus:bg-blue-700 transition ease-in-out duration-150";
     },
     async updateServerStatus(): Promise<void> {
       if (this.currentApiEndpoint !== null) {

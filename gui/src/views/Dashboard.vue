@@ -33,11 +33,10 @@
         <div class="hidden sm:block">
           <div class="border-b border-gray-200">
             <nav class="-mb-px flex">
-              <a
+              <button
                 v-for="(availableTab, index) in availableTabs"
                 v-bind:key="availableTab.name"
                 @click="switchTab(availableTab.name)"
-                href="#"
                 class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm leading-5 hover:text-gray-700 hover:border-gray-300 focus:outline-none"
                 v-bind:class="[
                   currentTab === availableTab.name
@@ -54,7 +53,7 @@
                 >
                   {{ getBadgeForMenu(availableTab.name, values).value }}
                 </span>
-              </a>
+              </button>
             </nav>
           </div>
         </div>
@@ -236,6 +235,8 @@ export default defineComponent({
       this.dataLoaded = true;
     },
     switchTab(tabName: string) {
+      console.log(tabName);
+      console.log(this.currentTab);
       this.currentTab = tabName;
     },
     getBadgeForMenu(
