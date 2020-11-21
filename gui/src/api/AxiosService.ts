@@ -7,3 +7,14 @@ export function getAxiosInstance(apiEndpoint: ApiEndpoint): AxiosInstance {
     timeout: 3000
   });
 }
+
+export async function getServerStatus(
+  apiEndpoint: ApiEndpoint
+): Promise<boolean> {
+  try {
+    await getAxiosInstance(apiEndpoint).get("status");
+    return true;
+  } catch (error) {
+    return false;
+  }
+}

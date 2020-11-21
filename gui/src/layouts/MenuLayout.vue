@@ -146,13 +146,46 @@
           <div class="flex-1 flex"></div>
           <div class="ml-4 flex items-center md:ml-6">
             <router-link
-              class="rounded-lg px-2 bg-blue-500 p-1 text-white text-sm leading-6 font-medium"
+              class="rounded-lg px-2 bg-blue-500 text-white text-sm leading-6 font-medium flex items-center py-1"
               to="/server-login"
             >
-              <span class="text-lg">
+              <span>
                 <i class="fas fa-server"></i>
               </span>
-              {{ currentApiEndpoint.name }} - {{ currentApiEndpoint.ipAddress }}
+              <span class="ml-1.5">
+                {{ currentApiEndpoint.name }}
+              </span>
+              <span
+                class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 ml-1.5"
+              >
+                {{ currentApiEndpoint.ipAddress }}
+              </span>
+              <span
+                v-if="currentApiEndpoint.online"
+                class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 ml-1.5"
+              >
+                <svg
+                  class="-ml-0.5 mr-1.5 h-2 w-2 text-green-800"
+                  fill="currentColor"
+                  viewBox="0 0 8 8"
+                >
+                  <circle cx="4" cy="4" r="3" />
+                </svg>
+                Online
+              </span>
+              <span
+                v-else
+                class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 ml-1.5"
+              >
+                <svg
+                  class="-ml-0.5 mr-1.5 h-2 w-2 text-red-800"
+                  fill="currentColor"
+                  viewBox="0 0 8 8"
+                >
+                  <circle cx="4" cy="4" r="3" />
+                </svg>
+                Offline
+              </span>
             </router-link>
           </div>
         </div>
@@ -173,6 +206,7 @@ import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import { State } from "@/definitions/State";
 import { ApiEndpoint } from "@/definitions/ApiEndpoint";
+import { getServerStatus } from "@/api/AxiosService";
 
 export default defineComponent({
   name: "MenuLayout",
@@ -209,6 +243,10 @@ export default defineComponent({
       return state.currentEndpoint;
     }
   }),
+  mounted() {
+    this.updateServerStatus();
+    setInterval(() => this.updateServerStatus(), 5000);
+  },
   methods: {
     getMenuItemClass(name: string): string {
       if (name === this.$route.name) {
@@ -223,6 +261,12 @@ export default defineComponent({
       }
 
       return "group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-blue-700 transition ease-in-out duration-150";
+    },
+    async updateServerStatus(): Promise<void> {
+      if (this.currentApiEndpoint !== null) {
+        const result = await getServerStatus(this.currentApiEndpoint);
+        this.currentApiEndpoint.online = result;
+      }
     }
   },
   components: {}

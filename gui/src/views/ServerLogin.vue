@@ -9,34 +9,11 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
-      <div
+      <Notification
         v-if="serverSelectError"
-        class="bg-red-100 border-l-4 border-red-400 p-4 mb-5"
-      >
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <svg
-              class="h-5 w-5 text-red-700"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-          <div class="ml-3">
-            <p class="text-sm text-red-700">
-              Selected server is offline
-            </p>
-          </div>
-        </div>
-      </div>
-
+        color="red"
+        :message="serverSelectErrorMessage"
+      ></Notification>
       <div>
         <fieldset>
           <legend class="sr-only">
@@ -94,7 +71,7 @@
                   "
                 >
                   <span
-                    v-if="getEndpointStatus(endpoint.id)"
+                    v-if="endpoint.online"
                     class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"
                   >
                     <svg
@@ -144,19 +121,20 @@ import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import { State } from "@/definitions/State";
 import { ApiEndpoint } from "@/definitions/ApiEndpoint";
-import { getAxiosInstance } from "@/api/AxiosService";
+import { getServerStatus } from "@/api/AxiosService";
 import { ApiEndpointStatus } from "@/definitions/ApiEndpointStatus";
+import Notification from "@/components/Notification/NotificationComponent.vue";
 
-// noinspection PointlessBooleanExpressionJS
 export default defineComponent({
   name: "ServerLogin",
   data() {
     return {
       currentlySelectedServerId: null as number | null,
+      currentlySelectedServerLoadedFromStore: false,
       dataLoaded: false,
-      apiEndpointStatuses: [] as ApiEndpointStatus[],
       apiEndpointStatusesLoaded: false,
-      serverSelectError: false
+      serverSelectError: false,
+      serverSelectErrorMessage: ""
     };
   },
   computed: mapState({
@@ -164,6 +142,7 @@ export default defineComponent({
       const endpoint = state.currentEndpoint;
       if (endpoint !== null) {
         this.currentlySelectedServerId = endpoint.id;
+        this.currentlySelectedServerLoadedFromStore = true;
       }
 
       return endpoint;
@@ -179,34 +158,32 @@ export default defineComponent({
   methods: {
     async fetchEndpointStatuses(): Promise<void> {
       const results = [];
-      for (let i = 0; i < this.availableEndpoints.length; i++) {
-        const result = await this.getInstanceStatus(this.availableEndpoints[i]);
+      for (const apiEndpoint of this.availableEndpoints) {
+        const result = await getServerStatus(apiEndpoint);
         results.push({
-          id: this.availableEndpoints[i].id,
+          id: apiEndpoint.id,
           online: result
         });
+
+        apiEndpoint.online = result;
       }
 
-      this.apiEndpointStatuses = results;
       this.apiEndpointStatusesLoaded = true;
-    },
-    async getInstanceStatus(apiEndpoint: ApiEndpoint): Promise<boolean> {
-      try {
-        await getAxiosInstance(apiEndpoint).get("status");
-        return true;
-      } catch (error) {
-        return false;
+      if (
+        this.serverSelectErrorMessage ===
+        "Endpoint health check not finished, please try again after status is known"
+      ) {
+        this.serverSelectErrorMessage = "";
+        this.serverSelectError = false;
       }
     },
     getEndpointStatus(id: number): boolean {
-      console.log(id);
-      console.log(this.apiEndpointStatuses);
       const result:
         | ApiEndpointStatus[]
-        | undefined = this.apiEndpointStatuses.filter(function(
-        status: ApiEndpointStatus
-      ): status is ApiEndpointStatus {
-        return status.id === id;
+        | undefined = this.availableEndpoints.filter(function(
+        apiEndpoint: ApiEndpoint
+      ): apiEndpoint is ApiEndpoint {
+        return apiEndpoint.id === id;
       });
 
       if (result === undefined || result.length !== 1) {
@@ -222,10 +199,15 @@ export default defineComponent({
         return;
       }
 
-      if (
-        this.apiEndpointStatusesLoaded !== false &&
-        this.getEndpointStatus(this.currentlySelectedServerId) === false
-      ) {
+      // if (this.apiEndpointStatusesLoaded === false) {
+      //   this.serverSelectErrorMessage = 'Endpoint health check not finished, please try again after status is known';
+      //   this.serverSelectError = true;
+      //   return;
+      // }
+
+      if (this.getEndpointStatus(this.currentlySelectedServerId) === false) {
+        this.serverSelectErrorMessage =
+          "Endpoint is offline, please make sure endpoint is up and running";
         this.serverSelectError = true;
         return;
       }
@@ -233,6 +215,8 @@ export default defineComponent({
       this.$store.commit("setCurrentEndpoint", this.currentlySelectedServerId);
     }
   },
-  components: {}
+  components: {
+    Notification
+  }
 });
 </script>

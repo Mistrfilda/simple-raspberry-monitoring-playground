@@ -3,4 +3,5 @@ export interface ApiEndpoint {
   name: string;
   ipAddress: string;
   baseUrl: string;
+  online: boolean;
 }

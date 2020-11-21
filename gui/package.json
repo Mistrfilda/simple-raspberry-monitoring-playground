@@ -18,7 +18,7 @@
     "popper.js": "^1.16.1",
     "postcss": "^7",
     "postcss-loader": "^4.0.4",
-    "tailwindcss": "^2.0.1-compat",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
