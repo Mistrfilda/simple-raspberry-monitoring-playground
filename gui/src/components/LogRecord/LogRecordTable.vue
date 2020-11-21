@@ -256,7 +256,7 @@ export default defineComponent({
   name: "LogRecordTable",
   props: {
     logId: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -344,7 +344,7 @@ export default defineComponent({
     this.fetchLogsRecords(this.logId);
   },
   methods: {
-    async fetchLogsRecords(logId: number): Promise<void> {
+    async fetchLogsRecords(logId: string): Promise<void> {
       let levels: string[] = [];
       let url: string = "http://localhost:30300/app1/logs/" + logId;
 
