@@ -145,12 +145,12 @@
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"
                 >
-                  <a
+                  <button
                     @click="showLogRecordModal(logRecord)"
-                    href="#"
                     class="text-blue-500 hover:text-blue-900"
-                    >Detail</a
                   >
+                    Detail
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -172,9 +172,8 @@
               </div>
               <div>
                 <nav class="relative z-0 inline-flex shadow-sm">
-                  <a
+                  <button
                     @click="arrowLeft()"
-                    href="#"
                     class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                     aria-label="Previous"
                   >
@@ -191,8 +190,8 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                  </a>
-                  <a
+                  </button>
+                  <button
                     v-for="paginationItem in getPaginator()"
                     v-bind:key="paginationItem.id"
                     @click="
@@ -200,7 +199,6 @@
                         ? ''
                         : changePagination(paginationItem.offset)
                     "
-                    href="#"
                     class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
                     :class="[
                       paginationItem.active === true
@@ -209,10 +207,9 @@
                     ]"
                   >
                     {{ paginationItem.label }}
-                  </a>
-                  <a
+                  </button>
+                  <button
                     @click="arrowRight()"
-                    href="#"
                     class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                     aria-label="Next"
                   >
@@ -229,7 +226,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </nav>
               </div>
             </div>
