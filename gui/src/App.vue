@@ -8,6 +8,9 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "App"
+  name: "App",
+  created() {
+    document.title = 'My monitoring app';
+  }
 });
 </script>
