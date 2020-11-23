@@ -24,7 +24,7 @@ async function createWindow() {
       nodeIntegration: (process.env
         .ELECTRON_NODE_INTEGRATION as unknown) as boolean
     },
-    // icon: path.join(__static, 'icon.png')
+    icon: path.join(__static, 'icon.png')
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
