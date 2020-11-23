@@ -54,5 +54,9 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.5"
+  },
+  "resolutions": {
+    "jpeg-js": "^0.4.0",
+    "yargs-parser": "^5.0.0-security.0"
   }
 }
