@@ -26,7 +26,7 @@ export default class logReader {
     }
 
     public getFullList(folder: string): LogRecordFile[] {
-        let results: LogRecordFile[] = [];
+        const results: LogRecordFile[] = [];
         const files = this.getList(folder);
         files.forEach(function (value: string) {
             if (value.startsWith('.') === false) {
@@ -63,7 +63,7 @@ export default class logReader {
             return JSON.parse(line);
         });
 
-        let linesCount = logRecordFiles.length;
+        const linesCount = logRecordFiles.length;
 
         if (offset !== null && limit !== null) {
             logRecordFiles = logRecordFiles.slice(offset, offset + limit);
@@ -93,7 +93,7 @@ export default class logReader {
             }
         }
 
-        let linesCount = filteredParts.length;
+        const linesCount = filteredParts.length;
 
         if (offset !== null && limit !== null) {
             filteredParts = filteredParts.slice(offset, offset + limit);
@@ -123,7 +123,7 @@ export default class logReader {
         let filteredParts: LogRecord[] = this.filterMultipleLevels(parsedFile, requestLogLevels);
 
 
-        let linesCount = filteredParts.length;
+        const linesCount = filteredParts.length;
 
         if (offset !== null && limit !== null) {
             filteredParts = filteredParts.slice(offset, offset + limit);
@@ -157,7 +157,7 @@ export default class logReader {
         desiredLogLevels.push(logLevel[logLevel.emergency].toUpperCase());
 
         let filteredParts: LogRecord[] = this.filterMultipleLevels(parsedFile, desiredLogLevels);
-        let linesCount = filteredParts.length;
+        const linesCount = filteredParts.length;
 
         if (offset !== null && limit !== null) {
             filteredParts = filteredParts.slice(offset, offset + limit);
@@ -174,7 +174,7 @@ export default class logReader {
     }
 
     private filterMultipleLevels(parsedLogRecords: LogRecord[], requestLogLevels: string[]): LogRecord[] {
-        let filteredParts: LogRecord[] = [];
+        const filteredParts: LogRecord[] = [];
         parsedLogRecords.forEach(function (value: LogRecord) {
             if (requestLogLevels.includes(value.level_name.toUpperCase())) {
                 filteredParts.push(value);

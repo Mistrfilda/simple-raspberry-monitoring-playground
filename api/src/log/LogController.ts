@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import LogReader from "./LogReader";
 import {BaseController} from "../controller/BaseController";
+import {ConfigDefinition} from "../config/ConfigDefinition";
 
 export default class logController extends BaseController {
 
@@ -8,10 +9,10 @@ export default class logController extends BaseController {
 
     appLogFolder: string;
 
-    constructor(appLogFolder: string) {
-        super();
+    constructor(config: ConfigDefinition) {
+        super(config);
         this.logReader = new LogReader();
-        this.appLogFolder = appLogFolder;
+        this.appLogFolder = config.appLogFolder;
     }
 
     public getAppLogs(req: Request, res: Response): void {
@@ -32,7 +33,7 @@ export default class logController extends BaseController {
             this.getNumberQueryParameter(req, 'offset'),
             this.getNumberQueryParameter(req, 'limit')),
         );
-    };
+    }
 
     public getAppLogContentsFilterLogLevel(req: Request, res: Response): void {
         res.json(this.logReader.readAndParseLogLevel(
@@ -42,7 +43,7 @@ export default class logController extends BaseController {
             this.getNumberQueryParameter(req, 'limit')
             )
         );
-    };
+    }
 
     public getAppLogContentsFilterAboveLogLevel(req: Request, res: Response): void {
         res.json(this.logReader.readAndParseAboveLogLevel(
@@ -53,7 +54,7 @@ export default class logController extends BaseController {
             this.getNumberQueryParameter(req, 'limit')
             )
         );
-    };
+    }
 
     public getAppLogContentsFilterMultipleLogLevels(req: Request, res: Response): void {
         res.json(this.logReader.readAndParseMultipleLogLevels(

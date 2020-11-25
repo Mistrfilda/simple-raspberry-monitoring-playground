@@ -13,8 +13,13 @@ import {SystemInformationResultValues} from "./SystemInformationResultValues";
 
 import ResultValues = SystemInformationResultValues.allInformation;
 import {BaseController} from "../controller/BaseController";
+import {ConfigDefinition} from "../config/ConfigDefinition";
 
 export default class SystemInformationController extends BaseController {
+
+    public constructor(config: ConfigDefinition) {
+        super(config);
+    }
 
     public getCurrentCpuTemperature(req: Request, res: Response) {
         systemInformationReader.getCurrentCpuTemperature()

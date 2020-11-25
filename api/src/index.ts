@@ -28,8 +28,8 @@ app.use(function (req, res, next) {
 });
 
 
-const logController = new LogController(config.appLogFolder);
-const systemInformationController = new SystemInformationController();
+const logController = new LogController(config);
+const systemInformationController = new SystemInformationController(config);
 
 app.get('/app1/status', (req: express.Request, res: express.Response) => {
     res.json({status: 'ok'});
