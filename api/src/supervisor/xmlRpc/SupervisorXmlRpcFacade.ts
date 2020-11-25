@@ -5,10 +5,8 @@ import { getRequestXml } from "./SupervisorRequestXmlGetter";
 import {SupervisorVersion} from "./response/SupervisorVersion";
 import { SupervisorXmlRpcMethod } from "./enum/SupervisorXmlMethods";
 import * as z from "zod";
-import {SupervisorState} from "./enum/SupervisorState";
 import {SupervisorStateInfo, supervisorStateInfoSchema} from "./response/SupervisorStateInfo";
 import {ProcessInfo, processInfoSchema} from "./response/ProcessInfo";
-import {SupervisorProcessState} from "./enum/SupervisorProcessState";
 
 export class SupervisorXmlRpcFacade {
     supervisorXmlParser: SupervisorXmlRpcParser;

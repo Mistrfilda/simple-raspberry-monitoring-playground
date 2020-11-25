@@ -2,6 +2,7 @@ import express, {Request, Response} from 'express';
 import LogController from "./log/LogController";
 import ConfigGetter from "./config/ConfigGetter";
 import SystemInformationController from "./systemInformation/SystemInformationController";
+import SupervisorController from "./supervisor/SupervisorController";
 
 const app = express();
 const port = 30300;
@@ -30,6 +31,7 @@ app.use(function (req, res, next) {
 
 const logController = new LogController(config);
 const systemInformationController = new SystemInformationController(config);
+const supervisorController = new SupervisorController(config);
 
 app.get('/app1/status', (req: express.Request, res: express.Response) => {
     res.json({status: 'ok'});
@@ -74,6 +76,18 @@ app.get('/app1/system/raminfo', (req: express.Request, res: express.Response) =>
 
 app.get('/app1/system/getAll', (req: express.Request, res: express.Response) => {
     systemInformationController.getAllData(req, res)
+});
+
+app.get('/app1/supervisor/version', (req: express.Request, res: express.Response) => {
+    supervisorController.getSupervisorVersion(req, res)
+});
+
+app.get('/app1/supervisor/state', (req: express.Request, res: express.Response) => {
+    supervisorController.getSupervisorState(req, res)
+});
+
+app.get('/app1/supervisor/all-processes', (req: express.Request, res: express.Response) => {
+    supervisorController.getSupervisorVersion(req, res)
 });
 
 // start the Express server
