@@ -87,7 +87,7 @@ app.get('/app1/supervisor/state', (req: express.Request, res: express.Response) 
 });
 
 app.get('/app1/supervisor/all-processes', (req: express.Request, res: express.Response) => {
-    supervisorController.getSupervisorVersion(req, res)
+    supervisorController.getAllProcesses(req, res)
 });
 
 // start the Express server
