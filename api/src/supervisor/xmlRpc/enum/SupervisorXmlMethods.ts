@@ -1,4 +1,4 @@
-export enum AvailableMethods {
+export enum SupervisorXmlRpcMethod {
     apiVersion= 'getAPIVersion',
     allProcesses = 'getAllProcessInfo',
     supervisorVersion = 'getSupervisorVersion',
@@ -14,11 +14,4 @@ export enum AvailableMethods {
     stopProcessGroup = 'stopProcessGroup',
     stopAllProcesses = 'stopAllProcesses',
     reloadConfig = 'reloadConfig',
-}
-
-export enum SupervisorState {
-    FATAL = 2,
-    RUNNING = 1,
-    RESTARTING = 0,
-    SHUTDOWN = -1
 }

@@ -6,4 +6,6 @@ api/dist
 
 api/yarn-error.log
 
+api/src/config/Local.ts
+
 !.gitkeep

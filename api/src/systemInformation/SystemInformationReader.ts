@@ -26,13 +26,13 @@ export default class SystemInformationReader {
 
     public async getAllInfo(): Promise<ResultValues>
     {
-        let cpuTemperature = await this.getCurrentCpuTemperature();
-        let cpuInfo = await this.getCpuInfo();
-        let currentCpuSpeedInfo = await this.getCurrentCpuSpeed();
-        let ramUsageInfo = await this.getRamUsageInfo();
-        let currentCpuLoad = await this.getCurrentLoad();
+        const cpuTemperature = await this.getCurrentCpuTemperature();
+        const cpuInfo = await this.getCpuInfo();
+        const currentCpuSpeedInfo = await this.getCurrentCpuSpeed();
+        const ramUsageInfo = await this.getRamUsageInfo();
+        const currentCpuLoad = await this.getCurrentLoad();
 
-        let coresSpeeds: SystemInformationResultValues.cpuCoreLoadInfo[] = [];
+        const coresSpeeds: SystemInformationResultValues.cpuCoreLoadInfo[] = [];
         currentCpuLoad.cpus.forEach(function (data: Systeminformation.CurrentLoadCpuData) {
             coresSpeeds.push({
                 load: data.load,
@@ -41,7 +41,7 @@ export default class SystemInformationReader {
             })
         });
 
-        let result: ResultValues = {
+        const result: ResultValues = {
             cpuInfo: {
                 manufacturer: cpuInfo.manufacturer,
                 brand: cpuInfo.brand,
