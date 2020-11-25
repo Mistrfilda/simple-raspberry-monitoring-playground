@@ -27,7 +27,7 @@ export const processInfoSchema = z.object({
     stderr_logfile: z.string().nullable(),
     stdout_logfile: z.string().nullable(),
     stop: z.number(),
-    exitStatus: z.number(),
+    exitstatus: z.number(),
     spawnerr: z.string().nullable(),
     now: z.number(),
     group: z.string(),
