@@ -90,6 +90,10 @@ app.get('/app1/supervisor/all-processes', (req: express.Request, res: express.Re
     supervisorController.getAllProcesses(req, res)
 });
 
+app.get('/app1/supervisor/all-info', (req: express.Request, res: express.Response) => {
+    supervisorController.getAllSupervisorInfo(req, res)
+});
+
 // start the Express server
 app.listen(port, function () {
     console.log(`server started at http://localhost:${port}`);

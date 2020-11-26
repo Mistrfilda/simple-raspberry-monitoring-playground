@@ -35,7 +35,7 @@ export default class SupervisorController extends BaseController {
             });
     }
 
-    public async getAllSupervisorInfo(req: Request, res: Response) {
+    public getAllSupervisorInfo(req: Request, res: Response) {
         this.supervisorXmlRpcFacade.getAllSupervisorInfo()
             .then(function (data: AllSupervisorInfo) {
                 res.json(data);
