@@ -7,6 +7,8 @@ import { SupervisorXmlRpcMethod } from "./enum/SupervisorXmlMethods";
 import * as z from "zod";
 import {SupervisorStateInfo, supervisorStateInfoSchema} from "./response/SupervisorStateInfo";
 import {ProcessInfo, processInfoSchema} from "./response/ProcessInfo";
+import {SupervisorApiVersion} from "./response/SupervisorApiVersion";
+import {AllSupervisorInfo} from "./response/AllSupervisorInfo";
 
 export class SupervisorXmlRpcFacade {
     supervisorXmlParser: SupervisorXmlRpcParser;
@@ -37,6 +39,34 @@ export class SupervisorXmlRpcFacade {
 
         return {
             version: parsedXml
+        }
+    }
+
+    public async getSupervisorApiVersion(): Promise<SupervisorApiVersion> {
+        const requestResponse = await this.axiosInstance.post(
+            '',
+            getRequestXml(SupervisorXmlRpcMethod.supervisorVersion)
+        );
+
+        const parsedXml = this.supervisorXmlParser.parseXml(requestResponse.data);
+        if (typeof parsedXml !== 'string') {
+            throw new Error('Invalid xml returned');
+        }
+
+        return {
+            apiVersion: parsedXml
+        }
+    }
+
+    public async getAllSupervisorInfo(): Promise<AllSupervisorInfo> {
+        const supervisorVersion = await this.getSupervisorVersion();
+        const apiVersion = await this.getSupervisorApiVersion();
+        const state = await this.getSupervisorState();
+
+        return {
+            apiVersion: apiVersion,
+            supervisorVersion: supervisorVersion,
+            state: state
         }
     }
 

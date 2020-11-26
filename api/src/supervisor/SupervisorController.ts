@@ -5,6 +5,7 @@ import {Request, Response} from "express";
 import {SupervisorVersion} from "./xmlRpc/response/SupervisorVersion";
 import {SupervisorStateInfo} from "./xmlRpc/response/SupervisorStateInfo";
 import {ProcessInfo} from "./xmlRpc/response/ProcessInfo";
+import {AllSupervisorInfo} from "./xmlRpc/response/AllSupervisorInfo";
 
 export default class SupervisorController extends BaseController {
     supervisorXmlRpcFacade: SupervisorXmlRpcFacade;
@@ -27,6 +28,16 @@ export default class SupervisorController extends BaseController {
     public getSupervisorState(req: Request, res: Response) {
         this.supervisorXmlRpcFacade.getSupervisorState()
             .then(function (data: SupervisorStateInfo) {
+                res.json(data);
+            })
+            .catch(function (error: string) {
+                throw new Error(error);
+            });
+    }
+
+    public async getAllSupervisorInfo(req: Request, res: Response) {
+        this.supervisorXmlRpcFacade.getAllSupervisorInfo()
+            .then(function (data: AllSupervisorInfo) {
                 res.json(data);
             })
             .catch(function (error: string) {
