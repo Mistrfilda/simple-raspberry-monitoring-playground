@@ -35,7 +35,7 @@ export default class logReader {
                     id: md5(value),
                     name: value,
                     fileSize: fileStats.size,
-                    lastUpdatedAtTimestamp: fileStats.atimeMs,
+                    lastUpdatedAtTimestamp: fileStats.mtimeMs,
                 });
             }
         })
