@@ -343,11 +343,11 @@ export default defineComponent({
   methods: {
     async fetchLogsRecords(logId: string): Promise<void> {
       let levels: string[] = [];
-      let url: string = "http://localhost:30300/app1/logs/" + logId;
+      let url: string = "logs/" + logId;
 
       if (this.selectedLevels.includes("all") === false) {
         levels = this.selectedLevels;
-        url = "http://localhost:30300/app1/logs/" + logId + "/levels";
+        url = "logs/" + logId + "/levels";
       }
 
       const config: AxiosRequestConfig = {
@@ -358,7 +358,7 @@ export default defineComponent({
         }
       };
 
-      const result = await Axios.get(url, config);
+      const result = await this.$store.getters.getAxiosInstance.get(url, config);
 
       this.logRecords = result.data;
       this.dataLoaded = true;

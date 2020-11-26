@@ -10,23 +10,16 @@ export default createStore({
         id: 1,
         name: "Localhost",
         ipAddress: "128.0.0.1",
-        baseUrl: "http://localhost:303002/app1/",
+        baseUrl: "http://localhost:303000/app1/",
         online: false
       },
       {
         id: 2,
         name: "Raspbberry 1",
-        ipAddress: "192.168.1.1",
-        baseUrl: "http://localhost:30300/app1/",
+        ipAddress: "192.168.1.192",
+        baseUrl: "http://192.168.1.192:30300/app1/",
         online: false
       },
-      {
-        id: 3,
-        name: "Raspbberry 2",
-        ipAddress: "192.168.1.2",
-        baseUrl: "http://localhost:30301/app1/",
-        online: false
-      }
     ] as ApiEndpoint[],
     currentEndpoint: null as ApiEndpoint | null
   },
@@ -49,5 +42,5 @@ export default createStore({
   },
   actions: {},
   modules: {},
-  plugins: [createPersistedState()]
+  // plugins: [createPersistedState()]
 });
