@@ -67,7 +67,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import LogsListTable from "@/components/LogsListTable.vue";
+import LogsListTable from "@/components/LogList/LogsListTable.vue";
 import { LogRecordFile } from "@/definitions/LogRecordFile";
 
 export default defineComponent({

@@ -70,6 +70,7 @@
                     v-bind:key="menuItem.id"
                     :to="menuItem.link"
                     :class="getMobileMenuItemClass(menuItem.name)"
+                    class="flex"
                   >
                     <span class="mr-3 text-white group-hover:text-gray-300">
                       <i class="fas fa-lg" :class="'fa-' + menuItem.icon"></i>
@@ -111,8 +112,8 @@
                 class="group flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md transition ease-in-out duration-150"
                 :class="getMenuItemClass(menuItem.name)"
               >
-                <span class="mr-3 text-white group-hover:text-gray-300">
-                  <i class="fas fa-lg" :class="'fa-' + menuItem.icon"></i>
+                <span class="h-6 w-6 mr-3 text-white group-hover:text-gray-300">
+                  <i class="fas" :class="'fa-' + menuItem.icon"></i>
                 </span>
                 <span>
                   {{ menuItem.label }}
@@ -236,6 +237,13 @@ export default defineComponent({
           label: "Logs",
           link: "/logs-list",
           icon: "database"
+        },
+        {
+          id: 4,
+          name: "Supervisor",
+          label: "Supervisor",
+          link: "/supervisor",
+          icon: "eye"
         }
       ],
       menuOpen: false

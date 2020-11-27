@@ -2,6 +2,9 @@ const globalFilters = {
   convertMillisecondsTimestampToDateString(timestamp: number): string {
     return this.formatDate(new Date(timestamp));
   },
+  convertSecondsTimestampToDateString(timestamp: number): string {
+    return this.formatDate(new Date(timestamp * 1000));
+  },
   calculateBytesToMb(bytes: number): number {
     return bytes / (1024 * 1024);
   },

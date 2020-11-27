@@ -18,9 +18,11 @@
     "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/typography": "^0.3.1",
+    "@types/js-cookie": "^2.2.6",
     "autoprefixer": "^9",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "js-cookie": "^2.2.1",
     "popper.js": "^1.16.1",
     "postcss": "^7",
     "postcss-loader": "^4.0.4",
@@ -28,7 +30,8 @@
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
-    "vuex-persistedstate": "^4.0.0-beta.1"
+    "vuex-persistedstate": "^4.0.0-beta.1",
+    "zod": "^1.11.10"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.0",

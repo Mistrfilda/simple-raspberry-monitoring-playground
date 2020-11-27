@@ -19,7 +19,7 @@ export default createStore({
         ipAddress: "192.168.1.192",
         baseUrl: "http://192.168.1.192:30300/app1/",
         online: false
-      },
+      }
     ] as ApiEndpoint[],
     currentEndpoint: null as ApiEndpoint | null
   },
@@ -42,5 +42,5 @@ export default createStore({
   },
   actions: {},
   modules: {},
-  // plugins: [createPersistedState()]
+  plugins: [createPersistedState()]
 });

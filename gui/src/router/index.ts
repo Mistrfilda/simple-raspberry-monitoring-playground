@@ -11,6 +11,7 @@ import Dashboard from "@/views/Dashboard.vue";
 import LogsList from "@/views/LogsList.vue";
 import LogRecord from "@/views/LogRecord.vue";
 import ServerLogin from "@/views/ServerLogin.vue";
+import Supervisor from "@/views/Supervisor.vue";
 
 import MenuLayout from "@/layouts/MenuLayout.vue";
 import BlankLayout from "@/layouts/BlankLayout.vue";
@@ -47,6 +48,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "ServerLogin",
     component: ServerLogin,
     meta: { layout: BlankLayout, selectedServer: false }
+  },
+  {
+    path: "/supervisor",
+    name: "Supervisor",
+    component: Supervisor,
+    meta: { layout: MenuLayout, selectedServer: true }
   }
 ];
 

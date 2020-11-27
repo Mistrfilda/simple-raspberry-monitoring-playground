@@ -182,11 +182,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import DashboardBasicCard from "@/components/DashboardBasicCard.vue";
-import DashboardCurrentCpuLoadCard from "@/components/DashboardCurrentCpuLoadCard.vue";
-import DashboardRamCards from "@/components/DashboardRamCards.vue";
+import DashboardBasicCard from "@/components/Dashboard/DashboardBasicCard.vue";
+import DashboardCurrentCpuLoadCard from "@/components/Dashboard/DashboardCurrentCpuLoadCard.vue";
+import DashboardRamCards from "@/components/Dashboard/DashboardRamCards.vue";
 import { SystemInformationResultValues } from "@/definitions/SystemInformationResultValues";
-import DashboardCurrentRamUsageCard from "@/components/DashboardCurrentRamUsageCard.vue";
+import DashboardCurrentRamUsageCard from "@/components/Dashboard/DashboardCurrentRamUsageCard.vue";
 import DashboardMenuTabBadge from "@/definitions/DashboardMenuTabBadge";
 
 export default defineComponent({

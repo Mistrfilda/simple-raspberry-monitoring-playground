@@ -23,8 +23,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { SystemInformationResultValues } from "@/definitions/SystemInformationResultValues";
-import DashboardCurrentRamUsageCard from "@/components/DashboardCurrentRamUsageCard.vue";
-import DashboardBasicCard from "@/components/DashboardBasicCard.vue";
+import DashboardCurrentRamUsageCard from "@/components/Dashboard/DashboardCurrentRamUsageCard.vue";
+import DashboardBasicCard from "@/components/Dashboard/DashboardBasicCard.vue";
 
 export default defineComponent({
   name: "DashboardRamCards",

@@ -239,7 +239,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Axios, { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 import { LogLevel } from "@/definitions/LogLevel";
 import { LogRecordResponse } from "@/definitions/LogRecordResponse";
 import { PaginatorItem } from "@/definitions/PaginatorItem";
@@ -358,7 +358,10 @@ export default defineComponent({
         }
       };
 
-      const result = await this.$store.getters.getAxiosInstance.get(url, config);
+      const result = await this.$store.getters.getAxiosInstance.get(
+        url,
+        config
+      );
 
       this.logRecords = result.data;
       this.dataLoaded = true;
