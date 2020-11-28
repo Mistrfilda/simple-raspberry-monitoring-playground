@@ -60,9 +60,9 @@
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
 
 "@types/express-serve-static-core@*":
-  version "4.17.13"
-  resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.13.tgz#d9af025e925fc8b089be37423b8d1eac781be084"
-  integrity sha512-RgDi5a4nuzam073lRGKTUIaL3eF2+H7LJvJ8eUnCI0wA6SNjXc44DCmWNiTLs/AZ7QlsFWZiw/gTG3nSQGL0fA==
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.14.tgz#cabf91debeeb3cb04b798e2cff908864e89b6106"
+  integrity sha512-uFTLwu94TfUFMToXNgRZikwPuZdOtDgs3syBtAIr/OXorL1kJqUJT9qCLnRZ5KBOWfZQikQ2xKgR2tnDj1OgDA==
   dependencies:
     "@types/node" "*"
     "@types/qs" "*"
@@ -94,9 +94,9 @@
   integrity sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==
 
 "@types/node@*", "@types/node@^14.0.13":
-  version "14.14.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.9.tgz#04afc9a25c6ff93da14deabd65dc44485b53c8d6"
-  integrity sha512-JsoLXFppG62tWTklIoO4knA+oDTYsmqWxHRvd4lpmfQRNhX6osheUOWETP2jMoV/2bEHuMra8Pp3Dmo/stBFcw==
+  version "14.14.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.10.tgz#5958a82e41863cfc71f2307b3748e3491ba03785"
+  integrity sha512-J32dgx2hw8vXrSbu4ZlVhn1Nm3GbeCFNw2FWL8S5QKucHGY0cyNwjdQdO+KMBZ4wpmC7KhLCiNsdk1RFRIYUQQ==
 
 "@types/qs@*":
   version "6.9.5"
@@ -369,9 +369,9 @@ concat-map@0.0.1:
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
 config@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/config/-/config-3.3.2.tgz#35be3846054340f0f79778b2445afffbc11867c7"
-  integrity sha512-NlGfBn2565YA44Irn7GV5KHlIGC3KJbf0062/zW5ddP9VXIuRj0m7HVyFAWvMZvaHPEglyGfwmevGz3KosIpCg==
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/config/-/config-3.3.3.tgz#d3c110fce543022c2fde28712e4f1b8440dee101"
+  integrity sha512-T3RmZQEAji5KYqUQpziWtyGJFli6Khz7h0rpxDwYNjSkr5ynyTWwO7WpfjHzTXclNCDfSWQRcwMb+NwxJesCKw==
   dependencies:
     json5 "^2.1.1"
 
@@ -1246,9 +1246,9 @@ supports-color@^7.1.0:
     has-flag "^4.0.0"
 
 systeminformation@^4.26.9:
-  version "4.30.1"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.30.1.tgz#9fc517472de50885a455f96af5e3c418dfb3ee21"
-  integrity sha512-FrZISqs8G/oZfnzodPU/zCk41JIfa0os2WY6CJKuk9FwIVc9UWMJfRlgP307AkFu8IRjuVI/HiCNiP4dAnURTA==
+  version "4.30.6"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.30.6.tgz#b56074968f2ea28ac118f23221c449b0f763db22"
+  integrity sha512-NV7zo9NU7fWSuiCORZmMLe90cFrrTS6jfalrQ0/5B7JGQ2ei15c2gmfICBwWdmviyv/FXAFVReySxOtDDkppqw==
 
 table@^5.2.3:
   version "5.4.6"

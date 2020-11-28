@@ -23,7 +23,6 @@
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "js-cookie": "^2.2.1",
-    "popper.js": "^1.16.1",
     "postcss": "^7",
     "postcss-loader": "^4.0.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
