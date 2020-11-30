@@ -99,11 +99,11 @@ app.get('/app1/supervisor/all-info', (req: express.Request, res: express.Respons
 });
 
 app.post('/app1/supervisor/start-process', (req: express.Request, res: express.Response) => {
-    supervisorController.getAllSupervisorInfo(req, res)
+    supervisorController.startProcess(req, res)
 });
 
 app.post('/app1/supervisor/stop-process', (req: express.Request, res: express.Response) => {
-    supervisorController.getAllSupervisorInfo(req, res)
+    supervisorController.stopProcess(req, res)
 });
 
 // start the Express server

@@ -1,14 +1,16 @@
 import {SupervisorXmlRpcParser} from "./SupervisorXmlRpcParser";
 import Axios, {AxiosInstance} from "axios";
 import http from "http";
-import { getRequestXml } from "./SupervisorRequestXmlGetter";
+import {getRequestXml, getRequestXmlWithParam} from "./SupervisorRequestXmlGetter";
 import {SupervisorVersion} from "./response/SupervisorVersion";
-import { SupervisorXmlRpcMethod } from "./enum/SupervisorXmlMethods";
+import {SupervisorXmlRpcMethod} from "./enum/SupervisorXmlMethods";
 import * as z from "zod";
 import {SupervisorStateInfo, supervisorStateInfoSchema} from "./response/SupervisorStateInfo";
 import {ProcessInfo, processInfoSchema} from "./response/ProcessInfo";
 import {SupervisorApiVersion} from "./response/SupervisorApiVersion";
 import {AllSupervisorInfo} from "./response/AllSupervisorInfo";
+import {StopSupervisorProcess, stopSupervisorProcessError} from "./response/StopSupervisorProcess";
+import {StartSupervisorProcess, startSupervisorProcessError} from "./response/StartSupervisorProcess";
 
 export class SupervisorXmlRpcFacade {
     supervisorXmlParser: SupervisorXmlRpcParser;
@@ -55,6 +57,48 @@ export class SupervisorXmlRpcFacade {
 
         return {
             apiVersion: parsedXml
+        }
+    }
+
+    public async stopSupervisorProcess(processName: string): Promise<StopSupervisorProcess> {
+        const requestResponse = await this.axiosInstance.post(
+            '',
+            getRequestXmlWithParam(SupervisorXmlRpcMethod.stopProcess, processName)
+        );
+
+        const parsedXml = this.supervisorXmlParser.parseXml(requestResponse.data);
+        if (typeof parsedXml === 'boolean') {
+            return {
+                success: parsedXml
+            }
+        }
+
+        const parsedResponse = stopSupervisorProcessError.parse(parsedXml);
+
+        return {
+            success: false,
+            message: parsedResponse.faultString
+        }
+    }
+
+    public async startSupervisorProcess(processName: string): Promise<StartSupervisorProcess> {
+        const requestResponse = await this.axiosInstance.post(
+            '',
+            getRequestXmlWithParam(SupervisorXmlRpcMethod.startProcess, processName)
+        );
+
+        const parsedXml = this.supervisorXmlParser.parseXml(requestResponse.data);
+        if (typeof parsedXml === 'boolean') {
+            return {
+                success: parsedXml
+            }
+        }
+
+        const parsedResponse = startSupervisorProcessError.parse(parsedXml);
+
+        return {
+            success: false,
+            message: parsedResponse.faultString
         }
     }
 

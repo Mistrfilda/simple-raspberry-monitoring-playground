@@ -6,6 +6,8 @@ import {SupervisorVersion} from "./xmlRpc/response/SupervisorVersion";
 import {SupervisorStateInfo} from "./xmlRpc/response/SupervisorStateInfo";
 import {ProcessInfo} from "./xmlRpc/response/ProcessInfo";
 import {AllSupervisorInfo} from "./xmlRpc/response/AllSupervisorInfo";
+import {StopSupervisorProcess} from "./xmlRpc/response/StopSupervisorProcess";
+import {StartSupervisorProcess} from "./xmlRpc/response/StartSupervisorProcess";
 
 export default class SupervisorController extends BaseController {
     supervisorXmlRpcFacade: SupervisorXmlRpcFacade;
@@ -48,6 +50,26 @@ export default class SupervisorController extends BaseController {
     public getAllProcesses(req: Request, res: Response) {
         this.supervisorXmlRpcFacade.getAllProcesses()
             .then(function (data: ProcessInfo[]) {
+                res.json(data);
+            })
+            .catch(function (error: string) {
+                throw new Error(error);
+            });
+    }
+
+    public stopProcess(req: Request, res: Response) {
+        this.supervisorXmlRpcFacade.stopSupervisorProcess(req.body.proccess)
+            .then(function (data: StopSupervisorProcess) {
+                res.json(data);
+            })
+            .catch(function (error: string) {
+                throw new Error(error);
+            });
+    }
+
+    public startProcess(req: Request, res: Response) {
+        this.supervisorXmlRpcFacade.startSupervisorProcess(req.body.proccess)
+            .then(function (data: StartSupervisorProcess) {
                 res.json(data);
             })
             .catch(function (error: string) {
