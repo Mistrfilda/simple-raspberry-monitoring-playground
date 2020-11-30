@@ -3,10 +3,14 @@ import LogController from "./log/LogController";
 import ConfigGetter from "./config/ConfigGetter";
 import SystemInformationController from "./systemInformation/SystemInformationController";
 import SupervisorController from "./supervisor/SupervisorController";
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 30300;
 const config = (new ConfigGetter()).getConfig();
+
+//Post body parser
+app.use(bodyParser.json());
 
 // Add headers
 app.use(function (req, res, next) {
@@ -91,6 +95,14 @@ app.get('/app1/supervisor/all-processes', (req: express.Request, res: express.Re
 });
 
 app.get('/app1/supervisor/all-info', (req: express.Request, res: express.Response) => {
+    supervisorController.getAllSupervisorInfo(req, res)
+});
+
+app.post('/app1/supervisor/start-process', (req: express.Request, res: express.Response) => {
+    supervisorController.getAllSupervisorInfo(req, res)
+});
+
+app.post('/app1/supervisor/stop-process', (req: express.Request, res: express.Response) => {
     supervisorController.getAllSupervisorInfo(req, res)
 });
 
