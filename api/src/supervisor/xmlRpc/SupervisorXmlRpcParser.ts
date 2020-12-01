@@ -9,7 +9,8 @@ export class SupervisorXmlRpcParser {
     public parseXml(xml: string): any {
         let resultObject: {
             methodResponse: {
-                params: any[]
+                params?: any[]
+                fault?: any[]
             }
         };
 
@@ -20,6 +21,10 @@ export class SupervisorXmlRpcParser {
 
             resultObject = result;
         });
+
+        if (resultObject.methodResponse.hasOwnProperty('fault')) {
+            return this.parseValue(resultObject.methodResponse.fault[0].value[0]);
+        }
 
         if (resultObject.methodResponse.params.length === 0 || resultObject.methodResponse.params.length > 1) {
             throw new Error('Invalid xml rpc');
@@ -44,7 +49,7 @@ export class SupervisorXmlRpcParser {
     }
 
 
-    private parseScalarValue(value: any): string | number {
+    private parseScalarValue(value: any): string | number | boolean {
         const valueKey = Object.keys(value)[0];
         if (valueKey === ScalarValues.INT) {
             return Number(value[valueKey][0]);
@@ -52,6 +57,10 @@ export class SupervisorXmlRpcParser {
 
         if (valueKey === ScalarValues.STRING) {
             return String(value[valueKey][0]);
+        }
+
+        if (valueKey === ScalarValues.BOOLEAN) {
+            return value[valueKey][0] === '1';
         }
 
         return value[valueKey][0];

@@ -1,6 +1,7 @@
 export enum ScalarValues {
     STRING = 'string',
-    INT = 'int'
+    INT = 'int',
+    BOOLEAN = 'boolean'
 }
 
 export enum ObjectValues {
