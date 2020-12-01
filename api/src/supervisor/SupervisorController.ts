@@ -8,6 +8,7 @@ import {ProcessInfo} from "./xmlRpc/response/ProcessInfo";
 import {AllSupervisorInfo} from "./xmlRpc/response/AllSupervisorInfo";
 import {StopSupervisorProcess} from "./xmlRpc/response/StopSupervisorProcess";
 import {StartSupervisorProcess} from "./xmlRpc/response/StartSupervisorProcess";
+import * as z from "zod";
 
 export default class SupervisorController extends BaseController {
     supervisorXmlRpcFacade: SupervisorXmlRpcFacade;
@@ -58,7 +59,11 @@ export default class SupervisorController extends BaseController {
     }
 
     public stopProcess(req: Request, res: Response) {
-        this.supervisorXmlRpcFacade.stopSupervisorProcess(req.body.proccess)
+        const validatedBody = z.object({
+            process: z.string()
+        }).parse(req.body);
+
+        this.supervisorXmlRpcFacade.stopSupervisorProcess(validatedBody.process)
             .then(function (data: StopSupervisorProcess) {
                 res.json(data);
             })
@@ -68,7 +73,12 @@ export default class SupervisorController extends BaseController {
     }
 
     public startProcess(req: Request, res: Response) {
-        this.supervisorXmlRpcFacade.startSupervisorProcess(req.body.proccess)
+        const validatedBody = z.object({
+            process: z.string()
+        }).parse(req.body);
+
+
+        this.supervisorXmlRpcFacade.startSupervisorProcess(validatedBody.process)
             .then(function (data: StartSupervisorProcess) {
                 res.json(data);
             })
