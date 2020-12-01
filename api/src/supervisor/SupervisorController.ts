@@ -1,7 +1,7 @@
 import {BaseController} from "../controller/BaseController";
 import {SupervisorXmlRpcFacade} from "./xmlRpc/SupervisorXmlRpcFacade";
 import {ConfigDefinition} from "../config/ConfigDefinition";
-import {Request, Response} from "express";
+import {Request, Response, NextFunction} from "express";
 import {SupervisorVersion} from "./xmlRpc/response/SupervisorVersion";
 import {SupervisorStateInfo} from "./xmlRpc/response/SupervisorStateInfo";
 import {ProcessInfo} from "./xmlRpc/response/ProcessInfo";
@@ -58,7 +58,7 @@ export default class SupervisorController extends BaseController {
             });
     }
 
-    public stopProcess(req: Request, res: Response) {
+    public stopProcess(req: Request, res: Response, next: NextFunction) {
         const validatedBody = z.object({
             process: z.string()
         }).parse(req.body);

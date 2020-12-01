@@ -4,6 +4,8 @@ import ConfigGetter from "./config/ConfigGetter";
 import SystemInformationController from "./systemInformation/SystemInformationController";
 import SupervisorController from "./supervisor/SupervisorController";
 import bodyParser from 'body-parser';
+import {addHeadersMiddleware} from "./express/middleware/AddHeadersMiddleware";
+import {errorMiddleware} from "./express/middleware/ErrorMiddleware";
 
 const app = express();
 const port = 30300;
@@ -13,25 +15,7 @@ const config = (new ConfigGetter()).getConfig();
 app.use(bodyParser.json());
 
 // Add headers
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    // Pass to next layer of middleware
-    next();
-});
-
+app.use(addHeadersMiddleware);
 
 const logController = new LogController(config);
 const systemInformationController = new SystemInformationController(config);
@@ -102,9 +86,12 @@ app.post('/app1/supervisor/start-process', (req: express.Request, res: express.R
     supervisorController.startProcess(req, res)
 });
 
-app.post('/app1/supervisor/stop-process', (req: express.Request, res: express.Response) => {
-    supervisorController.stopProcess(req, res)
+app.post('/app1/supervisor/stop-process', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    supervisorController.stopProcess(req, res, next)
 });
+
+// @ts-ignore
+app.use(errorMiddleware);
 
 // start the Express server
 app.listen(port, function () {
