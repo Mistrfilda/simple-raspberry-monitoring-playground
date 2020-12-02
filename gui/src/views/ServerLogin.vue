@@ -9,11 +9,11 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
-      <Notification
+      <Alert
         v-if="serverSelectError"
         color="red"
         :message="serverSelectErrorMessage"
-      ></Notification>
+      ></Alert>
       <div>
         <fieldset>
           <legend class="sr-only">
@@ -123,7 +123,7 @@ import { State } from "@/definitions/State";
 import { ApiEndpoint } from "@/definitions/ApiEndpoint";
 import { getServerStatus } from "@/api/AxiosService";
 import { ApiEndpointStatus } from "@/definitions/ApiEndpointStatus";
-import Notification from "@/components/Notification/NotificationComponent.vue";
+import Alert from "@/components/Shared/Alert/AlertComponent.vue";
 
 export default defineComponent({
   name: "ServerLogin",
@@ -216,7 +216,7 @@ export default defineComponent({
     }
   },
   components: {
-    Notification
+    Alert
   }
 });
 </script>

@@ -32,12 +32,21 @@
             <div
               class="relative -mr-px w-0 flex-1 inline-flex items-center justify-start py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
             >
-              <!-- Heroicon name: mail -->
               <button
+                v-if="isProcessRunning(supervisorProcess.state)"
+                @click="stopProcess(supervisorProcess.name)"
                 type="button"
                 class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-2"
               >
                 Stop
+              </button>
+              <button
+                  v-else
+                  @click="startProcess(supervisorProcess.name)"
+                  type="button"
+                  class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mr-2"
+              >
+                Start
               </button>
               <button
                 type="button"
@@ -66,12 +75,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { ProcessInfo } from "@/definitions/Supervisor/ProcessInfo";
-import {
-  SupervisorProcessState,
-  SupervisorProcessStateColor
-} from "@/definitions/Supervisor/SupervisorProcessState";
+import {defineComponent, PropType} from "vue";
+import {ProcessInfo} from "@/definitions/Supervisor/ProcessInfo";
+import {SupervisorProcessState, SupervisorProcessStateColor} from "@/definitions/Supervisor/SupervisorProcessState";
 
 export default defineComponent({
   name: "SupervisorJobsList",
@@ -85,6 +91,7 @@ export default defineComponent({
   },
   mounted() {
     this.fetchSupervisorProcesses();
+    setInterval(() => this.fetchSupervisorProcesses(), 5000);
   },
   methods: {
     async fetchSupervisorProcesses(): Promise<void> {
@@ -93,6 +100,31 @@ export default defineComponent({
       );
       this.supervisorProcesses = result.data;
       this.dataLoaded = true;
+    },
+    isProcessRunning(statecode: number): boolean {
+      return [SupervisorProcessState.RUNNING, SupervisorProcessState.STARTING].includes(statecode);
+    },
+    async stopProcess(process: string): Promise<void> {
+      const result = await this.$store.getters.getAxiosInstance.post(
+          "supervisor/stop-process",
+          {
+            process: process
+          }
+      );
+
+      console.log(result.data);
+      await this.fetchSupervisorProcesses();
+    },
+    async startProcess(process: string): Promise<void> {
+      const result = await this.$store.getters.getAxiosInstance.post(
+          "supervisor/start-process",
+          {
+            process: process
+          }
+      );
+
+      console.log(result.data);
+      await this.fetchSupervisorProcesses();
     },
     getProcessStatenameColor(statecode: number): string {
       switch (statecode) {
