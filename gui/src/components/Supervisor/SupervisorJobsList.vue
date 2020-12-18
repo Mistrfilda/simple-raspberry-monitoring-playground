@@ -1,4 +1,18 @@
 <template>
+  <transition
+    enter-active-class="ease-out duration-300"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="ease-in duration-200"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <SupervisorJobModal
+      v-if="supervisorDetailProcess !== null"
+      v-on:hide-modal="hideModal"
+      :supervisor-process="supervisorDetailProcess"
+    ></SupervisorJobModal>
+  </transition>
   <ul
     class="grid gap-6 sm:grid-cols-1 lg:grid-cols-2"
     v-if="dataLoaded === true"
@@ -41,10 +55,10 @@
                 Stop
               </button>
               <button
-                  v-else
-                  @click="startProcess(supervisorProcess.name)"
-                  type="button"
-                  class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mr-2"
+                v-else
+                @click="startProcess(supervisorProcess.name)"
+                type="button"
+                class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 mr-2"
               >
                 Start
               </button>
@@ -63,6 +77,7 @@
               <button
                 type="button"
                 class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                @click="showModal(supervisorProcess)"
               >
                 Detail
               </button>
@@ -75,9 +90,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
-import {ProcessInfo} from "@/definitions/Supervisor/ProcessInfo";
-import {SupervisorProcessState, SupervisorProcessStateColor} from "@/definitions/Supervisor/SupervisorProcessState";
+import { defineComponent, PropType } from "vue";
+import { ProcessInfo } from "@/definitions/Supervisor/ProcessInfo";
+import {
+  SupervisorProcessState,
+  SupervisorProcessStateColor
+} from "@/definitions/Supervisor/SupervisorProcessState";
+import SupervisorJobModal from "@/components/Supervisor/SupervisorJobModal.vue";
+import { getProcessStatenameColor as getBadgeColor } from "@/helpers/Supervisor/SupervisorBadgeHelper";
 
 export default defineComponent({
   name: "SupervisorJobsList",
@@ -86,6 +106,7 @@ export default defineComponent({
       supervisorProcesses: {
         type: Array as PropType<ProcessInfo[]>
       },
+      supervisorDetailProcess: null as ProcessInfo | null,
       dataLoaded: false
     };
   },
@@ -102,14 +123,17 @@ export default defineComponent({
       this.dataLoaded = true;
     },
     isProcessRunning(statecode: number): boolean {
-      return [SupervisorProcessState.RUNNING, SupervisorProcessState.STARTING].includes(statecode);
+      return [
+        SupervisorProcessState.RUNNING,
+        SupervisorProcessState.STARTING
+      ].includes(statecode);
     },
     async stopProcess(process: string): Promise<void> {
       const result = await this.$store.getters.getAxiosInstance.post(
-          "supervisor/stop-process",
-          {
-            process: process
-          }
+        "supervisor/stop-process",
+        {
+          process: process
+        }
       );
 
       console.log(result.data);
@@ -117,41 +141,27 @@ export default defineComponent({
     },
     async startProcess(process: string): Promise<void> {
       const result = await this.$store.getters.getAxiosInstance.post(
-          "supervisor/start-process",
-          {
-            process: process
-          }
+        "supervisor/start-process",
+        {
+          process: process
+        }
       );
 
       console.log(result.data);
       await this.fetchSupervisorProcesses();
     },
     getProcessStatenameColor(statecode: number): string {
-      switch (statecode) {
-        case SupervisorProcessState.BACKOFF:
-          return this.getBadgeClass(SupervisorProcessStateColor.BACKOFF);
-        case SupervisorProcessState.EXITED:
-          return this.getBadgeClass(SupervisorProcessStateColor.EXITED);
-        case SupervisorProcessState.FATAL:
-          return this.getBadgeClass(SupervisorProcessStateColor.FATAL);
-        case SupervisorProcessState.RUNNING:
-          return this.getBadgeClass(SupervisorProcessStateColor.RUNNING);
-        case SupervisorProcessState.STARTING:
-          return this.getBadgeClass(SupervisorProcessStateColor.STARTING);
-        case SupervisorProcessState.STOPPED:
-          return this.getBadgeClass(SupervisorProcessStateColor.STOPPED);
-        case SupervisorProcessState.STOPPING:
-          return this.getBadgeClass(SupervisorProcessStateColor.STOPPING);
-        case SupervisorProcessState.UNKNOWN:
-          return this.getBadgeClass(SupervisorProcessStateColor.UNKNOWN);
-        default:
-          throw new Error("Invalid state " + statecode);
-      }
+      return getBadgeColor(statecode);
     },
-    getBadgeClass(color: string): string {
-      return "bg-" + color + "-100 text-" + color + "-800";
+    showModal(supervisorProcess: ProcessInfo) {
+      this.supervisorDetailProcess = supervisorProcess;
+    },
+    hideModal() {
+      this.supervisorDetailProcess = null;
     }
   },
-  components: {}
+  components: {
+    SupervisorJobModal
+  }
 });
 </script>
